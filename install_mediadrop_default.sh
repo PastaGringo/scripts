@@ -1,4 +1,5 @@
 !#/bin/bash
+clear
 echo
 echo "Unofficial MediaDrop installer"
 echo "FOR NON PRODUCTION USE"
@@ -17,6 +18,7 @@ debconf-set-selections <<< 'mysql-server mysql-server/root_password password pas
 debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password password'
 
 echo "Installation des dépendances ..."
+	apt-get update >/dev/null 2>&1
 	apt-get -y install libjpeg-dev zlib1g-dev libfreetype6-dev libmysqlclient-dev python-dev python-setuptools python-virtualenv git build-essential mysql-server mysql-client >/dev/null 2>&1
 
 sqlroot=root
@@ -32,7 +34,7 @@ echo "Configuration virtual env ..."
 echo "Téléchargement des sources MediaDrop ..."
 	git clone git://github.com/mediadrop/mediadrop.git mediadrop-git
 	cd mediadrop-git
-	python setup.py develop
+	python setup.py develop >/dev/null 2>&1
 
 echo "Configuration de MediaDrop ..."
 	cp ../deployment.ini .
