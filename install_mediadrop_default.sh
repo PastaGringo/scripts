@@ -1,4 +1,4 @@
-!#/bin/bash
+#!/bin/bash
 clear
 echo
 echo "Unofficial MediaDrop installer"
@@ -17,7 +17,7 @@ echo
 debconf-set-selections <<< 'mysql-server mysql-server/root_password password password'
 debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password password'
 
-echo "Installation des dépendances ..."
+echo "Installation des dÃ©pendances ..."
 	apt-get update >/dev/null 2>&1
 	apt-get -y install libjpeg-dev zlib1g-dev libfreetype6-dev libmysqlclient-dev python-dev python-setuptools python-virtualenv git build-essential mysql-server mysql-client >/dev/null 2>&1
 
@@ -31,7 +31,7 @@ echo "Configuration virtual env ..."
 	virtualenv --no-site-packages MediaDropEnv
 	source MediaDropEnv/bin/activate
 
-echo "Téléchargement des sources MediaDrop ..."
+echo "TÃ©lÃ©chargement des sources MediaDrop ..."
 	git clone git://github.com/mediadrop/mediadrop.git mediadrop-git
 	cd mediadrop-git
 	python setup.py develop >/dev/null 2>&1
@@ -44,6 +44,6 @@ echo "Configuration de MediaDrop ..."
 echo "Lancement de MediaDrop ..."
 	paster serve --reload deployment.ini
 	
-echo "MediaDrop installé et lancé !"
-echo "Accessible à : http://ipduserveur:8080"
+echo "MediaDrop installÃ© et lancÃ© !"
+echo "Accessible Ã  : http://ipduserveur:8080"
 echo "Have fun!"
