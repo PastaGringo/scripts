@@ -9,6 +9,7 @@ echo "OK"
 echo
 echo "Downloading the new file from Github..."
 wget https://raw.githubusercontent.com/PastaGringo/scripts/master/installpackage-plex -P /usr/local/bin/quickbox/package/install/
+chmod 755 /usr/local/bin/quickbox/package/install/installpackage-plex
 echo "OK"
 echo
 echo "You can now go to the dashboard and install PMS !"
