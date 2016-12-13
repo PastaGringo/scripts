@@ -1,9 +1,10 @@
 #!/bin/bash
+clear
 echo
 echo "QuickBox patch PMS"
 echo "Run this script on fresh server without PMS installed !"
 echo 
-echo "Renaming existing installpackage-plex to intallpackage-plex.old"
+echo "Renaming existing installpackage-plex to installpackage-plex.old"
 mv /usr/local/bin/quickbox/package/install/installpackage-plex /usr/local/bin/quickbox/package/install/installpackage-plex.old
 echo "OK"
 echo
