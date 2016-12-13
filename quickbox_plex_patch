@@ -8,7 +8,7 @@ mv /usr/local/bin/quickbox/package/install/installpackage-plex /usr/local/bin/qu
 echo "OK"
 echo
 echo "Downloading the new file from Github..."
-wget https://raw.githubusercontent.com/PastaGringo/scripts/master/installpackage-plex -P /usr/local/bin/quickbox/package/install/
+wget https://raw.githubusercontent.com/PastaGringo/scripts/master/installpackage-plex -P /usr/local/bin/quickbox/package/install/ >/dev/null 2>&1
 chmod 755 /usr/local/bin/quickbox/package/install/installpackage-plex
 echo "OK"
 echo
