@@ -1,0 +1,15 @@
+#!/bin/bash
+echo
+echo "QuickBox patch PMS"
+echo "Run this script on fresh server without PMS installed !"
+echo 
+echo "Renaming existing installpackage-plex to intallpackage-plex.old"
+mv /usr/local/bin/quickbox/package/install/installpackage-plex /usr/local/bin/quickbox/package/install/installpackage-plex.old
+echo "OK"
+echo
+echo "Downloading the new file from Github..."
+wget https://raw.githubusercontent.com/PastaGringo/scripts/master/installpackage-plex -P /usr/local/bin/quickbox/package/install/
+echo "OK"
+echo
+echo "You can now go to the dashboard and install PMS !"
+echo "See ya! PastaGringo."
