@@ -90,7 +90,7 @@ touch /install/.freshrss.lock
 service apache2 reload
 
 echo -e "FreshRSS installed!"
-echo -e "Visit https://${ip}/freshrss to finish installation."
+echo -e "Visit https://${ip}/freshrss to the finish installation."
 echo -e "Database user: freshrss"
 echo -e "Database password: ${freshpass}"
 echo -e "Database name: freshrss"
