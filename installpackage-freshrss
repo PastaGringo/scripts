@@ -49,45 +49,45 @@ else
 fi
 
 echo -e "Installing dependencies ..."
-	# If you use an Apache Web server (otherwise you need another Web server)
-	sudo a2enmod headers expires rewrite ssl    #Apache modules
+# If you use an Apache Web server (otherwise you need another Web server)
+sudo a2enmod headers expires rewrite ssl    #Apache modules
 
 # For Ubuntu >= 16.04, Debian >= 9 Stretch
-	sudo apt install php php-curl php-gmp php-intl php-mbstring php-sqlite3 php-xml php-zip git -y
-	sudo apt install libapache2-mod-php -y #For Apache
+sudo apt install php php-curl php-gmp php-intl php-mbstring php-sqlite3 php-xml php-zip git -y
+sudo apt install libapache2-mod-php -y #For Apache
 
 # Restart Web server
-	sudo service apache2 restart
+sudo service apache2 restart
 
 # For FreshRSS itself (git is optional if you manually download the installation files)
-	cd /srv
-	sudo git clone https://github.com/FreshRSS/FreshRSS.git
-	cd FreshRSS
+cd /srv
+sudo git clone https://github.com/FreshRSS/FreshRSS.git
+cd FreshRSS
 
 # Set the rights so that your Web server can access the files
-	sudo chown -R :www-data . && sudo chmod -R g+r . && sudo chmod -R g+w ./data/
-	cat > /etc/apache2/sites-enabled/freshrss.conf <<EOF
-	Alias /freshrss "/srv/FreshRSS/"
-	<Directory /srv/FreshRSS/>
-	 Options +FollowSymlinks
-	 AllowOverride All
-	 Require all granted
-	</Directory>
-	EOF
+sudo chown -R :www-data . && sudo chmod -R g+r . && sudo chmod -R g+w ./data/
+cat > /etc/apache2/sites-enabled/freshrss.conf <<EOF
+Alias /freshrss "/srv/FreshRSS/"
+<Directory /srv/FreshRSS/>
+ Options +FollowSymlinks
+ AllowOverride All
+ Require all granted
+</Directory>
+EOF
 
 echo "Creating Database ..."
-	mysql --user="root" --password="$password" --execute="CREATE DATABASE freshrss;"
-	mysql --user="root" --password="$password" --execute="CREATE USER freshrss@localhost IDENTIFIED BY '$freshpass';"
-	mysql --user="root" --password="$password" --execute="GRANT ALL PRIVILEGES ON freshrss.* TO freshrss@localhost;"
-	mysql --user="root" --password="$password" --execute="FLUSH PRIVILEGES;"
+mysql --user="root" --password="$password" --execute="CREATE DATABASE freshrss;"
+mysql --user="root" --password="$password" --execute="CREATE USER freshrss@localhost IDENTIFIED BY '$freshpass';"
+mysql --user="root" --password="$password" --execute="GRANT ALL PRIVILEGES ON freshrss.* TO freshrss@localhost;"
+mysql --user="root" --password="$password" --execute="FLUSH PRIVILEGES;"
 
 echo "Creating custom menu ..."
-	wget https://github.com/PastaGringo/scripts/raw/master/freshrss_logo.png -P /srv/rutorrent/home/img/brands
-	chown www-data:www-data /srv/rutorrent/home/img/brands/freshrss_logo.png
-	sed -i '/plaza.quickbox.io/a $freshrssURL = "https://" . $_SERVER['HTTP_HOST'] . "/freshrss";' custom.menu.php
-	sed -i '/QuickBox Plaza/a <li><a class="grayscale" href="<?php echo "$freshrssURL"; ?>" target="_blank"><img src="img/brands/freshrss_logo.png" class="brand-ico"> <span>Fresh RSS</span></a></li>' custom.menu.php
-	touch /install/.freshrss.lock
-	service apache2 reload
+wget https://github.com/PastaGringo/scripts/raw/master/freshrss_logo.png -P /srv/rutorrent/home/img/brands
+chown www-data:www-data /srv/rutorrent/home/img/brands/freshrss_logo.png
+sed -i '/plaza.quickbox.io/a $freshrssURL = "https://" . $_SERVER['HTTP_HOST'] . "/freshrss";' custom.menu.php
+sed -i '/QuickBox Plaza/a <li><a class="grayscale" href="<?php echo "$freshrssURL"; ?>" target="_blank"><img src="img/brands/freshrss_logo.png" class="brand-ico"> <span>Fresh RSS</span></a></li>' custom.menu.php
+touch /install/.freshrss.lock
+service apache2 reload
 
 echo -e "FreshRSS installed!"
 echo -e "Visit https://${ip}/freshrss to finish installation."
