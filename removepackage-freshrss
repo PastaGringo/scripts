@@ -7,3 +7,4 @@ sed -i '/freshrssURL/d' /srv/rutorrent/home/custom/custom.menu.php
 mysql --user="root" --password="$password" --execute="DROP DATABASE freshrss;"
 mysql --user="root" --password="$password" --execute="DROP USER freshrss@localhost;"
 service apache2 reload
+echo "FreshRSS uninstalled !"
