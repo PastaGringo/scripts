@@ -85,7 +85,7 @@ echo "Creating custom menu ..."
 wget https://github.com/PastaGringo/scripts/raw/master/freshrss_logo.png -P /srv/rutorrent/home/img/brands
 chown www-data:www-data /srv/rutorrent/home/img/brands/freshrss_logo.png
 sed -i '/plaza.quickbox.io/a $freshrssURL = "https://" . $_SERVER['HTTP_HOST'] . "/freshrss";' /srv/rutorrent/home/custom/custom.menu.php
-sed -i '/QuickBox Plaza/a <li><a class="grayscale" href="<?php echo "$freshrssURL"; ?>" target="_blank"><img src="img/brands/freshrss_logo.png" class="brand-ico"> <span>Fresh RSS</span></a></li>' /srv/rutorrent/home/custom/custom.menu.php/custom.menu.php
+sed -i '/QuickBox Plaza/a <li><a class="grayscale" href="<?php echo "$freshrssURL"; ?>" target="_blank"><img src="img/brands/freshrss_logo.png" class="brand-ico"> <span>Fresh RSS</span></a></li>' /srv/rutorrent/home/custom/custom.menu.php
 touch /install/.freshrss.lock
 service apache2 reload
 
