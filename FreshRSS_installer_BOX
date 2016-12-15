@@ -1,23 +1,37 @@
 #!/bin/bash
+clear                                                                                                                                                                          
 echo "Hello !"
 echo "Welcome to FreshRSS installer for QuickBox!"
+echo
 PS3='What do you want to do ?: '
-options=("Install FreshRSS to QuickBox Package Manager (BOX)" "Install FreshRSS to QuickBox Package Manager (BOX)" "Option 3" "Quit")
+options=("Add FreshRSS to QuickBox Package Manager (BOX)" "Remove FreshRSS from QuickBox Package Manager (BOX)" "Quit")
 select opt in "${options[@]}"
 do
     case $opt in
-        "Option 1")
-            echo "you chose choice 1"
-            ;;
-        "Option 2")
-            echo "you chose choice 2"
-            ;;
-        "Option 3")
-            echo "you chose choice 3"
-            ;;
+        "Add FreshRSS to QuickBox Package Manager (BOX)")
+                echo "Copying files..."
+                wget https://raw.githubusercontent.com/PastaGringo/scripts/master/installpackage-freshrss -P /usr/local/bin/quickbox/package/install
+                wget https://raw.githubusercontent.com/PastaGringo/scripts/master/removepackage-freshrss -P  /usr/local/bin/quickbox/package/remove
+                echo "OK!"
+                echo "Now, please start BOX with root account and select Fresh to install it!"
+                echo "See ya!"
+                echo
+                break
+                ;;
+        "Remove FreshRSS from QuickBox Package Manager (BOX)")
+                echo "Removing files..."
+                echo "OK!"
+                echo "See ya!"
+                echo
+                break
+                ;;
         "Quit")
-            break
+                echo "See ya!"
+                echo
+                break
             ;;
         *) echo invalid option;;
     esac
 done
+                                                                                                                                                                               
+                          
