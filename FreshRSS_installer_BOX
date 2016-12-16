@@ -3,7 +3,7 @@ clear
 echo "Hello !"
 echo "Welcome to FreshRSS installer for QuickBox!"
 echo
-PS3='What do you want to do ?: '
+PS3='What do you want to do ? :'
 options=("Add FreshRSS to QuickBox Package Manager (BOX)" "Remove FreshRSS from QuickBox Package Manager (BOX)" "Quit")
 select opt in "${options[@]}"
 do
@@ -21,6 +21,8 @@ do
         "Remove FreshRSS from QuickBox Package Manager (BOX)")
                 echo "Removing files..."
                 echo "OK!"
+		rm -rf /usr/local/bin/quickbox/package/install/installpackage-freshrss
+		rm -rf /usr/local/bin/quickbox/package/remove/removepackage-freshrss
                 echo "See ya!"
                 echo
                 break
