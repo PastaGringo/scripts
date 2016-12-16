@@ -1,0 +1,33 @@
+echo 
+echo "Welcome to Koel installer for Quickbox.io !"
+echo "The installation may during up to 10 minutes depending of your system strenght..."
+echo "
+apt-get install -y apache2 php g++ git curl mariadb-server php-curl php-mysql
+git clone https://github.com/phanan/koel.git /srv/koel
+curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/srv/koel --filename=composer
+curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
+sudo apt-get install -y nodejs
+
+echo "MySQL configuration ..."
+mysql> CREATE DATABASE koel DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
+mysql> CREATE USER 'koelusr'@'localhost' IDENTIFIED BY 'koelpwd';
+mysql --user="root" --password="$password" --execute="GRANT ALL PRIVILEGES ON koelusr.* TO koeldb@localhost;"
+mysql --user="root" --password="$password" --execute="FLUSH PRIVILEGES;"
+
+npm install
+
+BEFORE In the config/broadcasting.php change 'default' => env('BROADCAST_DRIVER', 'pusher') to 'default' => env('BROADCAST_DRIVER', 'log'),
+
+./composer install
+
+sed -i 's/ADMIN_EMAIL=/ADMIN_EMAIL= /g' .env
+sed -i 's/ADMIN_NAME=/ADMIN_NAME= /g' .env
+sed -i 's/ADMIN_PASSWORD=/ADMIN_PASSWORD= /g' .env
+sed -i 's/DB_CONNECTION=/DB_CONNECTION=mysql/g' .env
+sed -i 's/DB_HOST=/DB_HOST=127.0.0.1/g' .env
+sed -i 's/DB_DATABASE=homestead/DB_DATABASE=koeldb/g' .env
+sed -i 's/DB_USERNAME=homestead/DB_USERNAME=koelusr/g' .env
+sed -i 's/DB_PASSWORD=secret/DB_PASSWORD= /g' .env
+
+php artisan koel:init
+php artisan serve --host 0.0.0.0
