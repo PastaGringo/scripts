@@ -20,6 +20,8 @@
 inst=$(which mysql)
 ip=$(ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
 
+echo "FreshRSS setup wizard!"
+echo "How many time do you want your feeds be refreshed ?"
 echo "Please choose a password for the FreshRSS mysql user."
 read -s -p "Password: " 'freshpass'
 #Check for existing mysql and install if not found
@@ -53,17 +55,20 @@ echo -e "Installing dependencies ..."
 sudo a2enmod headers expires rewrite ssl    #Apache modules
 
 # For Ubuntu >= 16.04, Debian >= 9 Stretch
-sudo apt install php php-curl php-gmp php-intl php-mbstring php-sqlite3 php-xml php-zip git -y
-sudo apt install libapache2-mod-php -y #For Apache
+echo "Installing dependencies ..." 
+sudo apt install php php-curl php-gmp php-intl php-mbstring php-sqlite3 php-xml php-zip git -y > /dev/null 2>&1
+sudo apt install libapache2-mod-php -y #For Apache> /dev/null 2>&1
 
 # Restart Web server
 sudo service apache2 restart
 
+echo "Installing FreshRSS ..."
 # For FreshRSS itself (git is optional if you manually download the installation files)
 cd /srv
 sudo git clone https://github.com/FreshRSS/FreshRSS.git
 cd FreshRSS
 
+echo "Configuring Apache2 site ..."
 # Set the rights so that your Web server can access the files
 sudo chown -R :www-data . && sudo chmod -R g+r . && sudo chmod -R g+w ./data/
 cat > /etc/apache2/sites-enabled/freshrss.conf <<EOF
@@ -75,7 +80,7 @@ Alias /freshrss "/srv/FreshRSS/"
 </Directory>
 EOF
 
-echo "Creating Database ..."
+echo "Creating MySQL Database ..."
 mysql --user="root" --password="$password" --execute="CREATE DATABASE freshrss;"
 mysql --user="root" --password="$password" --execute="CREATE USER freshrss@localhost IDENTIFIED BY '$freshpass';"
 mysql --user="root" --password="$password" --execute="GRANT ALL PRIVILEGES ON freshrss.* TO freshrss@localhost;"
@@ -90,7 +95,7 @@ touch /install/.freshrss.lock
 service apache2 reload
 
 echo -e "FreshRSS installed!"
-echo -e "Visit https://${ip}/freshrss to the finish installation."
+echo -e "Please visit https://${ip}/freshrss to the finish installation."
 echo -e "Database user: freshrss"
 echo -e "Database password: ${freshpass}"
 echo -e "Database name: freshrss"
