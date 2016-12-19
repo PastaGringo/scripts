@@ -50,8 +50,8 @@ yarn install >/dev/null 2>&1
 #npm install gulp --save-dev
 #npm install gulp-notify --save-dev
 ./composer install >/dev/null 2>&1       
-sed -i 's/ADMIN_EMAIL=/ADMIN_EMAIL=/g' .env
-sed -i 's/ADMIN_NAME=/ADMIN_NAME=/g' .env
+sed -i 's/ADMIN_EMAIL=/ADMIN_EMAIL=test@lolilol.ch/g' .env
+sed -i 's/ADMIN_NAME=/ADMIN_NAME=lolilol/g' .env
 sed -i 's/ADMIN_PASSWORD=/ADMIN_PASSWORD=koelpwd/g' .env
 sed -i 's/DB_CONNECTION=/DB_CONNECTION=mysql/g' .env
 sed -i 's/DB_HOST=/DB_HOST=127.0.0.1/g' .env
