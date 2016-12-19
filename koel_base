@@ -1,5 +1,5 @@
-#!/usr/bin/env bash               
-clear
+#!/usr/bin/env bash      
+clear                                                                                                                                                      
 spinner() {                                                                                                                                                                    
     local i sp n                                                                                                                                                               
     sp='/-\|'                                                                                                                                                                  
@@ -9,12 +9,10 @@ spinner() {
         printf "%s\b" "${sp:i++%n:1}"                                                                                                                                          
     done                                                                                                                                                                       
 }
-
 echo 
 echo "Welcome to Koel installer for Quickbox.io !"
 echo "The installation may during up to 10 minutes depending of your system strenght..."
 echo 
-
 printf 'Setting up environnement ... '                                                                                                                                           
 spinner &                                                                                                                                                                      
 curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - >/dev/null 2>&1 
@@ -22,36 +20,41 @@ echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/source
 curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash - >/dev/null 2>&1                                                                                                                                                                           
 kill "$!" # kill the spinner                                                                                                                                                   
 printf '\n'   
-
+####
+echo
+####
 #debian needs apt-transport-https
-
 printf 'Installing dependencies ... '                                                                                                                                           
 spinner &                                                                                                                                                                      
 apt-get update >/dev/null 2>&1
 apt-get install -y apache2 php g++ git curl mariadb-server php-curl php-mysql php-mbstring phpunit nodejs yarn unzip libnotify-bin >/dev/null 2>&1                                                                                                                                                                                           
 kill "$!" # kill the spinner                                                                                                                                                   
 printf '\n'       
-
+####
+echo
+####
 echo "Cloning Koel ..."
 git clone https://github.com/phanan/koel.git /srv/koel
-
+####
+echo
+####
 printf 'Configuring Koel (could take between 5-10 minutes) ... '                                                                                                                                           
 spinner &               
 cd /srv/koel/                                                                                                                                                       
-curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/srv/koel --filename=composer
+curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/srv/koel --filename=composer >/dev/null 2>&1 
 sed -i "/BROADCAST_DRIVER/c 	'default' => env('BROADCAST_DRIVER', 'log')," config/broadcasting.php
 mysql --user="root" --password="$password" --execute="CREATE DATABASE koeldb DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;"
 mysql --user="root" --password="$password" --execute="CREATE USER 'koelusr'@'localhost' IDENTIFIED BY 'koelpwd';"
 mysql --user="root" --password="$password" --execute="GRANT ALL PRIVILEGES ON koeldb.* TO 'koelusr'@'localhost' WITH GRANT OPTION;"
 mysql --user="root" --password="$password" --execute="FLUSH PRIVILEGES;"       
-npm install gulp -g >/dev/null 2>&1 
+./composer install >/dev/null 2>&1   
+npm install gulp --save-dev >/dev/null 2>&1 
 yarn install >/dev/null 2>&1 
 #npm install
 #npm install gulp --save-dev
 #npm install gulp-notify --save-dev
-./composer install >/dev/null 2>&1       
-sed -i 's/ADMIN_EMAIL=/ADMIN_EMAIL=test@lolilol.ch/g' .env
-sed -i 's/ADMIN_NAME=/ADMIN_NAME=lolilol/g' .env
+sed -i 's/ADMIN_EMAIL=/ADMIN_EMAIL=/g' .env
+sed -i 's/ADMIN_NAME=/ADMIN_NAME=/g' .env
 sed -i 's/ADMIN_PASSWORD=/ADMIN_PASSWORD=koelpwd/g' .env
 sed -i 's/DB_CONNECTION=/DB_CONNECTION=mysql/g' .env
 sed -i 's/DB_HOST=/DB_HOST=127.0.0.1/g' .env
@@ -61,6 +64,8 @@ sed -i 's/DB_PASSWORD=/DB_PASSWORD=koelpwd/g' .env
 php artisan koel:init                                                                                                                                        
 kill "$!" # kill the spinner                                                                                                                                                   
 printf '\n'      
-
+####
+echo
+####
 echo "Starting Koel ... "
 php artisan serve --host 0.0.0.0
