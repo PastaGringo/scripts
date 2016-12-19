@@ -8,8 +8,8 @@ echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/source
 curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
 echo 
 echo "Installing all depedencies ..."
-#required for debian apt-transport-https
-apt-get update && apt-get install -y apache2 php g++ git curl mariadb-server php-curl php-mysql php-mbstring phpunit nodejs yarn unzip libnotify-bin 
+#debian needs apt-transport-https
+apt-get update && apt-get install -y apache2 php g++ git curl mariadb-server php-curl php-mysql php-mbstring phpunit nodejs yarn unzip libnotify-bin
 
 echo "Cloning Koel ..."
 git clone https://github.com/phanan/koel.git /srv/koel
@@ -26,3 +26,26 @@ mysql --user="root" --password="$password" --execute="CREATE DATABASE koeldb DEF
 mysql --user="root" --password="$password" --execute="CREATE USER 'koelusr'@'localhost' IDENTIFIED BY 'koelpwd';"
 mysql --user="root" --password="$password" --execute="GRANT ALL PRIVILEGES ON koeldb.* TO 'koelusr'@'localhost' WITH GRANT OPTION;"
 mysql --user="root" --password="$password" --execute="FLUSH PRIVILEGES;"
+
+echo "Installing Koel ... (takes few minutes!)"
+
+npm install
+npm install gulp --save-dev
+npm install gulp-notify --save-dev
+./composer install
+
+sed -i 's/ADMIN_EMAIL=/ADMIN_EMAIL=~cestdelafoudre@gmail.com/g' .env
+sed -i 's/ADMIN_NAME=/ADMIN_NAME=pastadmin/g' .env
+sed -i 's/ADMIN_PASSWORD=/ADMIN_PASSWORD=koelpwd/g' .env
+sed -i 's/DB_CONNECTION=/DB_CONNECTION=mysql/g' .env
+sed -i 's/DB_HOST=/DB_HOST=127.0.0.1/g' .env
+sed -i 's/DB_DATABASE=homestead/DB_DATABASE=koeldb/g' .env
+sed -i 's/DB_USERNAME=homestead/DB_USERNAME=koelusr/g' .env
+sed -i 's/DB_PASSWORD=secret/DB_PASSWORD=koelpwd/g' .env
+
+php artisan koel:init
+php artisan serve --host 0.0.0.0
+
+echo
+echo "Koel installed !"
+echo "Starting Koel..."
