@@ -8,7 +8,8 @@ echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/source
 curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
 echo 
 echo "Installing all depedencies ..."
-apt-get update && apt-get install -y apache2 php g++ git curl mariadb-server php-curl php-mysql php-mbstring phpunit nodejs yarn unzip apt-transport-https
+#required for debian apt-transport-https
+apt-get update && apt-get install -y apache2 php g++ git curl mariadb-server php-curl php-mysql php-mbstring phpunit nodejs yarn unzip libnotify-bin 
 
 echo "Cloning Koel ..."
 git clone https://github.com/phanan/koel.git /srv/koel
