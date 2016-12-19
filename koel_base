@@ -1,0 +1,27 @@
+echo 
+echo "Welcome to Koel installer for Quickbox.io !"
+echo "The installation may during up to 10 minutes depending of your system strenght..."
+echo 
+echo "Installing repos for NodeJS and Yarn ..."
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
+echo 
+echo "Installing all depedencies ..."
+apt-get update && apt-get install -y apache2 php g++ git curl mariadb-server php-curl php-mysql php-mbstring phpunit nodejs yarn unzip apt-transport-https
+
+echo "Cloning Koel ..."
+git clone https://github.com/phanan/koel.git /srv/koel
+
+echo "Installing Composer locally in /srv/koel ..."
+curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/srv/koel --filename=composer
+echo
+echo "Configuring Koel ..."
+cd /srv/koel/
+sed -i "/BROADCAST_DRIVER/c 	'default' => env('BROADCAST_DRIVER', 'log')," config/broadcasting.php
+echo
+echo "Configuring MySQL"
+mysql --user="root" --password="$password" --execute="CREATE DATABASE koeldb DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;"
+mysql --user="root" --password="$password" --execute="CREATE USER 'koelusr'@'localhost' IDENTIFIED BY 'koelpwd';"
+mysql --user="root" --password="$password" --execute="GRANT ALL PRIVILEGES ON koeldb.* TO 'koelusr'@'localhost' WITH GRANT OPTION;"
+mysql --user="root" --password="$password" --execute="FLUSH PRIVILEGES;"
