@@ -39,9 +39,9 @@ sed -i 's/ADMIN_NAME=/ADMIN_NAME=pastadmin/g' .env
 sed -i 's/ADMIN_PASSWORD=/ADMIN_PASSWORD=koelpwd/g' .env
 sed -i 's/DB_CONNECTION=/DB_CONNECTION=mysql/g' .env
 sed -i 's/DB_HOST=/DB_HOST=127.0.0.1/g' .env
-sed -i 's/DB_DATABASE=homestead/DB_DATABASE=koeldb/g' .env
-sed -i 's/DB_USERNAME=homestead/DB_USERNAME=koelusr/g' .env
-sed -i 's/DB_PASSWORD=secret/DB_PASSWORD=koelpwd/g' .env
+sed -i 's/DB_DATABASE=/DB_DATABASE=koeldb/g' .env
+sed -i 's/DB_USERNAME=/DB_USERNAME=koelusr/g' .env
+sed -i 's/DB_PASSWORD=/DB_PASSWORD=koelpwd/g' .env
 
 php artisan koel:init
 php artisan serve --host 0.0.0.0
