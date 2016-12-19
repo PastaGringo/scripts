@@ -1,3 +1,14 @@
+#!/usr/bin/env bash                                                                                                                                                            
+spinner() {                                                                                                                                                                    
+    local i sp n                                                                                                                                                               
+    sp='/-\|'                                                                                                                                                                  
+    n=${#sp}                                                                                                                                                                   
+    printf ' '                                                                                                                                                                 
+    while sleep 0.1; do                                                                                                                                                        
+        printf "%s\b" "${sp:i++%n:1}"                                                                                                                                          
+    done                                                                                                                                                                       
+}
+
 echo 
 echo "Welcome to Koel installer for Quickbox.io !"
 echo "The installation may during up to 10 minutes depending of your system strenght..."
@@ -9,7 +20,13 @@ curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
 echo 
 echo "Installing all depedencies ..."
 #debian needs apt-transport-https
-apt-get update && apt-get install -y apache2 php g++ git curl mariadb-server php-curl php-mysql php-mbstring phpunit nodejs yarn unzip libnotify-bin
+
+printf 'Installing depedencies ... '                                                                                                                                           
+spinner &                                                                                                                                                                      
+apt-get update >/dev/null 2>&1
+apt-get install -y apache2 php g++ git curl mariadb-server php-curl php-mysql php-mbstring phpunit nodejs yarn unzip libnotify-bin >/dev/null 2>&1                                                                                                                                                                                           
+kill "$!" # kill the spinner                                                                                                                                                   
+printf '\n'       
 
 echo "Cloning Koel ..."
 git clone https://github.com/phanan/koel.git /srv/koel
@@ -28,14 +45,15 @@ mysql --user="root" --password="$password" --execute="GRANT ALL PRIVILEGES ON ko
 mysql --user="root" --password="$password" --execute="FLUSH PRIVILEGES;"
 
 echo "Installing Koel ... (takes few minutes!)"
-
-npm install
-npm install gulp --save-dev
-npm install gulp-notify --save-dev
+npm install gulp -g
+yarn install
+#npm install
+#npm install gulp --save-dev
+#npm install gulp-notify --save-dev
 ./composer install
 
-sed -i 's/ADMIN_EMAIL=/ADMIN_EMAIL=~cestdelafoudre@gmail.com/g' .env
-sed -i 's/ADMIN_NAME=/ADMIN_NAME=pastadmin/g' .env
+sed -i 's/ADMIN_EMAIL=/ADMIN_EMAIL=/g' .env
+sed -i 's/ADMIN_NAME=/ADMIN_NAME=/g' .env
 sed -i 's/ADMIN_PASSWORD=/ADMIN_PASSWORD=koelpwd/g' .env
 sed -i 's/DB_CONNECTION=/DB_CONNECTION=mysql/g' .env
 sed -i 's/DB_HOST=/DB_HOST=127.0.0.1/g' .env
@@ -45,7 +63,3 @@ sed -i 's/DB_PASSWORD=/DB_PASSWORD=koelpwd/g' .env
 
 php artisan koel:init
 php artisan serve --host 0.0.0.0
-
-echo
-echo "Koel installed !"
-echo "Starting Koel..."
