@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 spinner() {
     local i sp n
     sp='/-\|'
@@ -9,11 +8,11 @@ spinner() {
         printf "%s\b" "${sp:i++%n:1}"
     done
 }
-
-printf 'Doing important work '
+printf 'working'
 spinner &
-
-sleep 10  # sleeping for 10 seconds is important work
-
+$cmd
 kill "$!" # kill the spinner
 printf '\n'
+
+cmd=apt-get update && apt-get install -y apache2 php g++ git curl mariadb-server php-curl php-mysql php-mbstring phpunit unzip
+spinner
