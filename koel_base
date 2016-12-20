@@ -39,7 +39,7 @@ git clone https://github.com/phanan/koel.git /srv/koel >/dev/null 2>&1
 ####
 echo
 ####
-printf 'Configuring Koel (could take between 5-10 minutes) ... '                                                                                                                                           
+printf 'Configuring Koel ... '                                                                                                                                           
 spinner &               
 cd /srv/koel/                                                                                                                                                       
 curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/srv/koel --filename=composer >/dev/null 2>&1 
