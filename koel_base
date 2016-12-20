@@ -35,7 +35,7 @@ printf '\n'
 echo
 ####
 echo "Cloning Koel ..."
-git clone https://github.com/phanan/koel.git /srv/koel
+git clone https://github.com/phanan/koel.git /srv/koel >/dev/null 2>&1 
 ####
 echo
 ####
