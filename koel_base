@@ -11,7 +11,7 @@ spinner() {
 }
 echo 
 echo "Welcome to Koel installer for Quickbox.io !"
-echo "For more information, you could check the Koel's website before installing it at http://koel.phanan.net/" 
+echo "For more information, you could check the Koel's website : http://koel.phanan.net/" 
 echo "The installation may during up to 10 minutes depending of your system strenght..."
 echo 
 printf 'Setting up environnement ... '                                                                                                                                           
@@ -48,7 +48,8 @@ mysql --user="root" --password="$password" --execute="CREATE DATABASE koeldb DEF
 mysql --user="root" --password="$password" --execute="CREATE USER 'koelusr'@'localhost' IDENTIFIED BY 'koelpwd';"
 mysql --user="root" --password="$password" --execute="GRANT ALL PRIVILEGES ON koeldb.* TO 'koelusr'@'localhost' WITH GRANT OPTION;"
 mysql --user="root" --password="$password" --execute="FLUSH PRIVILEGES;"  
-npm install -g gulp     
+npm install gulp
+npm install node-sass     
 ./composer install >/dev/null 2>&1
 sed -i 's/ADMIN_EMAIL=/ADMIN_EMAIL=johndoe@gmail.com/g' .env
 sed -i 's/ADMIN_NAME=/ADMIN_NAME=JohnDoe/g' .env
