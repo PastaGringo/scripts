@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+RED='\033[0;31m'
+YELLOW='\033[0;33m'
+GREEN='\033[1;32m'
+NC='\033[0m' # No Color
+spinner() {
+    local i sp n
+    sp='/-\|'
+    n=${#sp}
+    printf ' '
+    while sleep 0.1; do
+        printf "%s\b" "${sp:i++%n:1}"
+    done
+}
+printf "${YELLOW}Installing ...${NC}"
+spinner &
+sleep 3                                                                                                                                                                        
+kill "$!"
+wait "$!" 2>/dev/null
+RED='\033[0;31m'
+YELLOW='\033[0;33m'
+GREEN='\033[1;32m'
+NC='\033[0m' # No Color
+printf "${GREEN}Done.${NC}\n"
