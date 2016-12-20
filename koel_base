@@ -60,7 +60,8 @@ sed -i 's/DB_DATABASE=/DB_DATABASE=koeldb/g' .env
 sed -i 's/DB_USERNAME=/DB_USERNAME=koelusr/g' .env
 sed -i 's/DB_PASSWORD=/DB_PASSWORD=koelpwd/g' .env          
 php artisan koel:init
-gulp
+cd /node_modules/.bin/
+./gulp all
 #npm install gulp --save-dev >/dev/null 2>&1 
 #yarn install >/dev/null 2>&1 
 #npm install
