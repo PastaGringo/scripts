@@ -114,6 +114,7 @@ echo ""
 echo "Koel installed \o/"
 echo "Koel is accessible at http://YourServerIP:8000"
 echo "Reverse proxy is coming ;)"
+echo ""
 
 
 
