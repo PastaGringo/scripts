@@ -29,8 +29,8 @@ printf 'Installing dependencies ... '
 spinner &                                                                                                                                                                      
 apt-get update >/dev/null 2>&1
 apt-get install -y apache2 php g++ git curl mariadb-server php-curl php-mysql php-mbstring phpunit nodejs yarn unzip libnotify-bin >/dev/null 2>&1                                                                                                                                                                                           
-kill "$!" # kill the spinner                                                                                                                                                   
-printf '\n'       
+kill "$!" >/dev/null 2>&1                                                                                                                                                 
+echo "Done"
 ####
 echo
 ####
@@ -60,8 +60,9 @@ sed -i 's/DB_PASSWORD=/DB_PASSWORD=koelpwd/g' .env
 php artisan koel:init >/dev/null 2>&1 
 yarn >/dev/null 2>&1 
 cd node_modules/.bin/ 
+npm install --save-dev node-sass
 ./gulp
-cd ../...                                                                                                                    
+cd /srv/koel                                                                                                                   
 kill "$!" # kill the spinner                                                                                                                                                   
 printf '\n'      
 ####
