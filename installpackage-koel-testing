@@ -98,7 +98,7 @@ wait "$!" 2>/dev/null
 printf "${GREEN}Done.${NC}\n" 
 
 echo ""
-echo "Koel installed \o/"
+echo "Koel is installed ! \o/"
 echo "Koel is accessible at http://$externalip:8000"
 echo "Reverse proxy is coming ;)"
 echo ""
