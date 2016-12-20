@@ -48,9 +48,12 @@ mysql --user="root" --password="$password" --execute="CREATE DATABASE koeldb DEF
 mysql --user="root" --password="$password" --execute="CREATE USER 'koelusr'@'localhost' IDENTIFIED BY 'koelpwd';"
 mysql --user="root" --password="$password" --execute="GRANT ALL PRIVILEGES ON koeldb.* TO 'koelusr'@'localhost' WITH GRANT OPTION;"
 mysql --user="root" --password="$password" --execute="FLUSH PRIVILEGES;"  
-npm install gulp >/dev/null 2>&1     
-npm install node-sass >/dev/null 2>&1          
-./composer install >/dev/null 2>&1
+./composer install
+php artisan koel:init
+yarn
+cd node_modules/.bin/
+./gulp
+cd ../..
 sed -i 's/ADMIN_EMAIL=/ADMIN_EMAIL=johndoe@gmail.com/g' .env
 sed -i 's/ADMIN_NAME=/ADMIN_NAME=JohnDoe/g' .env
 sed -i 's/ADMIN_PASSWORD=/ADMIN_PASSWORD=koelpwd/g' .env
@@ -58,16 +61,7 @@ sed -i 's/DB_CONNECTION=/DB_CONNECTION=mysql/g' .env
 sed -i 's/DB_HOST=/DB_HOST=127.0.0.1/g' .env
 sed -i 's/DB_DATABASE=/DB_DATABASE=koeldb/g' .env
 sed -i 's/DB_USERNAME=/DB_USERNAME=koelusr/g' .env
-sed -i 's/DB_PASSWORD=/DB_PASSWORD=koelpwd/g' .env          
-php artisan koel:init
-cd node_modules/.bin/
-./gulp
-cd ../..
-#npm install gulp --save-dev >/dev/null 2>&1 
-#yarn install >/dev/null 2>&1 
-#npm install
-#npm install gulp --save-dev
-#npm install gulp-notify --save-dev                                                                                                                         
+sed -i 's/DB_PASSWORD=/DB_PASSWORD=koelpwd/g' .env                                                                                                                                
 kill "$!" # kill the spinner                                                                                                                                                   
 printf '\n'      
 ####
