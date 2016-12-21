@@ -32,7 +32,8 @@ printf "${GREEN}Done.${NC}\n"
 printf "${YELLOW}Installing dependencies ...${NC}"                                                                                                            
 spinner & 
 apt-get update 
-apt-get install -y apache2 php g++ git curl mariadb-server php-curl php-mysql php-mbstring phpunit nodejs yarn unzip libnotify-bin 
+apt-get install -y apt-transport-https yarn
+apt-get install -y apache2 php g++ git curl mariadb-server php-curl php-mysql php-mbstring phpunit nodejs unzip libnotify-bin 
 kill "$!" 
 wait "$!" 2>/dev/null 
 printf "${GREEN}Done.${NC}\n" 
