@@ -21,7 +21,8 @@ echo "The installation may during up to 10 minutes!"
 echo 
 
 printf "${YELLOW}Setting up environnement ...${NC}"                                                                                                            
-spinner &                                                                                                                                                                      
+spinner &
+apt-get install -y apt-transport-https 
 curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -  
 echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list  
 curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -                                                                                                                                                                            
@@ -32,8 +33,7 @@ printf "${GREEN}Done.${NC}\n"
 printf "${YELLOW}Installing dependencies ...${NC}"                                                                                                            
 spinner & 
 apt-get update 
-apt-get install -y apt-transport-https yarn
-apt-get install -y apache2 php g++ git curl mariadb-server php-curl php-mysql php-mbstring phpunit nodejs unzip libnotify-bin 
+apt-get install -y yarn apache2 php g++ git curl mariadb-server php-curl php-mysql php-mbstring phpunit nodejs unzip libnotify-bin 
 kill "$!" 
 wait "$!" 2>/dev/null 
 printf "${GREEN}Done.${NC}\n" 
