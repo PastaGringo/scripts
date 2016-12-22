@@ -92,11 +92,11 @@ printf "${GREEN}Done.${NC}\n"
 
 printf "${YELLOW}Creating custom menu ...${NC}"                                                                                                                                           
 spinner &           
-wget https://github.com/PastaGringo/scripts/raw/master/koel.svg -P /srv/rutorrent/home/img/brands
-chown www-data:www-data /srv/rutorrent/home/img/brands/koel.svg
-sed -i '/plaza.quickbox.io/a $koelURL = "https://" . $_SERVER['HTTP_HOST'] . "/koel/";' /srv/rutorrent/home/custom/custom.menu.php
-sed -i '/QuickBox Plaza/a <li><a class="grayscale" href="<?php echo "$koelURL"; ?>" target="_blank"><img src="img/brands/koel.png" class="brand-ico"> <span>Koel</span></a></li>' /srv/rutorrent/home/custom/custom.menu.php
-touch /install/.koel.lock
+wget https://github.com/PastaGringo/scripts/raw/master/koel.svg -P /srv/rutorrent/home/img/brands >/dev/null 2>&1 
+chown www-data:www-data /srv/rutorrent/home/img/brands/koel.svg 
+sed -i '/plaza.quickbox.io/a $koelURL = "https://" . $_SERVER['HTTP_HOST'] . "/koel/";' /srv/rutorrent/home/custom/custom.menu.php >/dev/null 2>&1 
+sed -i '/QuickBox Plaza/a <li><a class="grayscale" href="<?php echo "$koelURL"; ?>" target="_blank"><img src="img/brands/koel.png" class="brand-ico"> <span>Koel</span></a></li>' /srv/rutorrent/home/custom/custom.menu.php >/dev/null 2>&1 
+touch /install/.koel.lock >/dev/null 2>&1 
 kill "$!" 
 wait "$!" 2>/dev/null 
 printf "${GREEN}Done.${NC}\n" 
