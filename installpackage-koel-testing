@@ -90,6 +90,34 @@ kill "$!"
 wait "$!" 2>/dev/null 
 printf "${GREEN}Done.${NC}\n" 
 
+printf "${YELLOW}Creating custom menu ...${NC}"                                                                                                                                           
+spinner &           
+wget https://github.com/PastaGringo/scripts/raw/master/koel.png -P /srv/rutorrent/home/img/brands
+chown www-data:www-data /srv/rutorrent/home/img/brands/koel.png
+sed -i '/plaza.quickbox.io/a $freshrssURL = "https://" . $_SERVER['HTTP_HOST'] . "/koel/";' /srv/rutorrent/home/custom/custom.menu.php
+sed -i '/QuickBox Plaza/a <li><a class="grayscale" href="<?php echo "koel"; ?>" target="_blank"><img src="img/brands/freshrss_logo.png" class="brand-ico"> <span>Koel</span></a></li>' /srv/rutorrent/home/custom/custom.menu.php
+touch /install/.koel.lock
+kill "$!" 
+wait "$!" 2>/dev/null 
+printf "${GREEN}Done.${NC}\n" 
+
+printf "${YELLOW}Configuring Apache2 site ...${NC}"                                                                                                                                           
+spinner &           
+cat > /etc/apache2/sites-enabled/koel.conf <<EOF
+<Location /koel>                                                                                                                                                        
+ProxyPass http://localhost:8000                                                                                                                                    
+ProxyPassReverse http://localhost:8000                                                                                                                         
+AuthType Digest                                                                                                                                                                
+AuthName "rutorrent"                                                                                                                                                           
+AuthUserFile '/etc/htpasswd'                                                                                                                                                   
+Require user pastadmin                                                                                                                                                         
+</Location>  
+EOF
+service apache2 reload
+kill "$!" 
+wait "$!" 2>/dev/null 
+printf "${GREEN}Done.${NC}\n" 
+
 printf "${YELLOW}Starting Koel ...${NC}"                                                                                                            
 spinner & 
 cd /srv/koel                 
@@ -103,5 +131,4 @@ echo "Koel is installed ! \o/"
 echo "Koel is accessible at http://$externalip:8000"
 echo "Reverse proxy is coming ;)"
 echo ""
-
 
