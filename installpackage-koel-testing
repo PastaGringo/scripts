@@ -20,7 +20,7 @@ echo "For more information, you could check the Koel's website : http://koel.pha
 echo "The installation may during up to 10 minutes!"
 echo 
 
-printf "${YELLOW}Setting up environnement ...${NC}"                                                                                                            
+printf "${YELLOW}(1/9) Setting up environnement ...${NC}"                                                                                                            
 spinner &        
 apt-get install -y apt-transport-https >/dev/null 2>&1 
 curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - >/dev/null 2>&1 
@@ -30,7 +30,7 @@ kill "$!"
 wait "$!" 2>/dev/null
 printf "${GREEN}Done.${NC}\n"
 
-printf "${YELLOW}Installing dependencies ...${NC}"                                                                                                            
+printf "${YELLOW}(2/9)Installing dependencies ...${NC}"                                                                                                            
 spinner & 
 apt-get update >/dev/null 2>&1
 apt-get install -y apache2 php g++ git yarn curl mariadb-server php-curl php-mysql php-mbstring phpunit nodejs unzip libnotify-bin >/dev/null 2>&1
@@ -38,14 +38,14 @@ kill "$!"
 wait "$!" 2>/dev/null 
 printf "${GREEN}Done.${NC}\n" 
 
-printf "${YELLOW}Cloning Koel ...${NC}"                                                                                                            
+printf "${YELLOW}(3/9)Cloning Koel ...${NC}"                                                                                                            
 spinner & 
 git clone https://github.com/phanan/koel.git /srv/koel >/dev/null 2>&1 
 kill "$!" 
 wait "$!" 2>/dev/null 
 printf "${GREEN}Done.${NC}\n" 
 
-printf "${YELLOW}Installing Composer and setting MySQL configuration ...${NC}"                                                                                                            
+printf "${YELLOW}(4/9)Installing Composer and setting MySQL configuration ...${NC}"                                                                                                            
 spinner & 
 cd /srv/koel/                                                                                                                                                       
 curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/srv/koel --filename=composer >/dev/null 2>&1 
@@ -58,7 +58,7 @@ kill "$!"
 wait "$!" 2>/dev/null 
 printf "${GREEN}Done.${NC}\n" 
 
-printf "${YELLOW}Composing Koel ...${NC}"                                                                                                            
+printf "${YELLOW}(5/9) Composing Koel ...${NC}"                                                                                                            
 spinner & 
 ./composer install >/dev/null 2>&1 
 sed -i 's/ADMIN_EMAIL=/ADMIN_EMAIL=johndoe@gmail.com/g' .env
@@ -73,14 +73,14 @@ kill "$!"
 wait "$!" 2>/dev/null 
 printf "${GREEN}Done.${NC}\n" 
 
-printf "${YELLOW}Initializating Koel ...${NC}"                                                                                                            
+printf "${YELLOW}(6/9) Initializating Koel ...${NC}"                                                                                                            
 spinner & 
 php artisan koel:init >/dev/null 2>&1 
 kill "$!" 
 wait "$!" 2>/dev/null 
 printf "${GREEN}Done.${NC}\n" 
 
-printf "${YELLOW}Configuring Koel modules ...${NC}"                                                                                                            
+printf "${YELLOW}(7/9)Configuring Koel modules ...${NC}"                                                                                                            
 spinner & 
 yarn >/dev/null 2>&1 
 cd node_modules/.bin/ 
@@ -90,7 +90,7 @@ kill "$!"
 wait "$!" 2>/dev/null 
 printf "${GREEN}Done.${NC}\n" 
 
-printf "${YELLOW}Creating custom menu ...${NC}"                                                                                                                                           
+printf "${YELLOW}((8/9)Creating custom menu ...${NC}"                                                                                                                                           
 spinner &           
 wget https://github.com/PastaGringo/scripts/raw/master/koel.svg -P /srv/rutorrent/home/img/brands >/dev/null 2>&1 
 chown www-data:www-data /srv/rutorrent/home/img/brands/koel.svg 
@@ -101,7 +101,7 @@ kill "$!"
 wait "$!" 2>/dev/null 
 printf "${GREEN}Done.${NC}\n" 
 
-printf "${YELLOW}Starting Koel ...${NC}"                                                                                                            
+printf "${YELLOW}(9/9)Starting Koel ...${NC}"                                                                                                            
 spinner & 
 cd /srv/koel                 
 screen -S koel -dm php artisan serve --host 0.0.0.0
