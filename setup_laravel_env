@@ -40,6 +40,6 @@ service apache2 restart
 cd /var/www/html
 composer create-project --prefer-dist cnvs/canvas canvas
 #CANVAS
-chgrp -R www-data /var/www/html/project
-chmod -R 775 /var/www/html/project/storage
+chgrp -R www-data /var/www/html/canvas
+chmod -R 775 /var/www/html/canvas/storage
 #php artisan key:generate
