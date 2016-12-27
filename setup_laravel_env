@@ -11,11 +11,35 @@ php composer-setup.php
 php -r "unlink('composer-setup.php');"
 mv composer.phar /usr/local/bin/composer
 #MySQL
-mysql --user="root" --password="$password" --execute="CREATE DATABASE homestead DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;"
-mysql --user="root" --password="$password" --execute="CREATE USER 'homestead'@'localhost' IDENTIFIED BY 'secret';"
-mysql --user="root" --password="$password" --execute="GRANT ALL PRIVILEGES ON homestead.* TO 'homestead'@'localhost' WITH GRANT OPTION;"
+mysql --user="root" --password="$password" --execute="CREATE DATABASE canvas_db DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;"
+mysql --user="root" --password="$password" --execute="CREATE USER 'canvas_usr'@'localhost' IDENTIFIED BY 'secret';"
+mysql --user="root" --password="$password" --execute="GRANT ALL PRIVILEGES ON canvas_usr.* TO 'canvas_db'@'localhost' WITH GRANT OPTION;"
 mysql --user="root" --password="$password" --execute="FLUSH PRIVILEGES;"  
-#CANVAS
-composer create-project --prefer-dist cnvs/canvas blog
-#php artisan key:generate
+#Apache2
+cd /etc/apache2/sites-available
+cat > /etc/apache2/sites-enabled/canvas.conf <<EOF
+<VirtualHost *:80>
+    ServerName localhost
 
+    ServerAdmin webmaster@localhost
+    DocumentRoot /var/www/html/canvas/public
+
+    <Directory /var/www/html/canvas>
+        AllowOverride All
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+EOF
+a2dissite 000-default.conf
+a2ensite canvas.conf
+a2enmod rewrite
+service apache2 restart
+#CANVAS
+chgrp -R www-data /var/www/html/project
+chmod -R 775 /var/www/html/project/storage
+#
+cd /var/www/html
+composer create-project --prefer-dist cnvs/canvas canvas
+#php artisan key:generate
