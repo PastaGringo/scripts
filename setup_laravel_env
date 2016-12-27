@@ -36,10 +36,10 @@ a2dissite 000-default.conf
 a2ensite canvas.conf
 a2enmod rewrite
 service apache2 restart
-#CANVAS
-chgrp -R www-data /var/www/html/project
-chmod -R 775 /var/www/html/project/storage
 #
 cd /var/www/html
 composer create-project --prefer-dist cnvs/canvas canvas
+#CANVAS
+chgrp -R www-data /var/www/html/project
+chmod -R 775 /var/www/html/project/storage
 #php artisan key:generate
