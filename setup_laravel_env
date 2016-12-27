@@ -17,7 +17,7 @@ mysql --user="root" --password="$password" --execute="GRANT ALL PRIVILEGES ON ca
 mysql --user="root" --password="$password" --execute="FLUSH PRIVILEGES;"  
 #Apache2
 cd /etc/apache2/sites-available
-cat > /etc/apache2/sites-enabled/canvas.conf <<EOF
+cat > /etc/apache2/sites-available/canvas.conf <<EOF
 <VirtualHost *:80>
     ServerName localhost
 
