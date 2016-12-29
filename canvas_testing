@@ -43,9 +43,15 @@ service apache2 restart >/dev/null 2>&1
 echo "Composing Canvas ..."
 cd /var/www/html
 composer create-project --prefer-dist cnvs/canvas canvas >/dev/null 2>&1 
-chgrp -R www-data /var/www/html/canvas
 cd canvas 
-chmod 777 ./storage/framework/sessions
+#chgrp -R www-data /var/www/html/canvas
+chown -R www-data:www-data /var/www/html/canvas
+chmod -R 775 /var/www/html/canvas/storage
+#chmod 777 ./storage/framework/sessions
+#npm install --save-dev node-sass 
+#composer install
+#yarn
+#php artisan storage:link
 wget https://raw.githubusercontent.com/PastaGringo/scripts/master/.env_canvas >/dev/null 2>&1 
 mv .env_canvas .env 
 echo ""
@@ -53,6 +59,7 @@ echo "Starting the Canvas wizard, simply do :"
 echo "NO to the first question"
 echo "YES to the second question"
 echo "The rest depends on you!"
+echo ""
 php artisan canvas:install
 echo ""
 echo "Enjoy blogging with Canvas !"
