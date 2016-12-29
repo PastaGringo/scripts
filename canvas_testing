@@ -45,8 +45,8 @@ cd /var/www/html
 composer create-project --prefer-dist cnvs/canvas canvas >/dev/null 2>&1 
 cd canvas 
 #chgrp -R www-data /var/www/html/canvas
-chown -R www-data:www-data /var/www/html/canvas
-chmod -R 775 /var/www/html/canvas/storage
+#chown -R www-data:www-data /var/www/html/canvas
+chmod -R 777 storage/
 #chmod 777 ./storage/framework/sessions
 #npm install --save-dev node-sass 
 #composer install
