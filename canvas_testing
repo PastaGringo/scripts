@@ -3,7 +3,7 @@ clear
 echo ""
 echo "Canvas : Hello"
 echo "Canvas : How are you?"
-echo "Canvas : I'm currently being installed, I will come back in a few minutes..."
+echo "Canvas : I'm currently being installed, I will come back in few minutes..."
 echo
 echo "Installing dependencies ..."
 apt-get update >/dev/null 2>&1 
@@ -28,11 +28,11 @@ cat > /etc/apache2/sites-available/canvas.conf <<EOF
     ServerName localhost
     ServerAdmin webmaster@localhost
     DocumentRoot /var/www/html/canvas/public
-    <Directory /var/www/html/canvas>
+    <Directory /var/www/html/canvas/public>
         AllowOverride All
     </Directory>
-    ErrorLog ${APACHE_LOG_DIR}/error.log
-    CustomLog ${APACHE_LOG_DIR}/access.log combined
+    ErrorLog /var/log/apache2/canvas-error.log
+    CustomLog /var/log/apache2/canvas-access.log
 </VirtualHost>
 EOF
 a2dissite 000-default.conf >/dev/null 2>&1 
@@ -43,15 +43,9 @@ service apache2 restart >/dev/null 2>&1
 echo "Composing Canvas ..."
 cd /var/www/html
 composer create-project --prefer-dist cnvs/canvas canvas >/dev/null 2>&1 
-cd canvas 
-#chgrp -R www-data /var/www/html/canvas
-#chown -R www-data:www-data /var/www/html/canvas
-chmod -R 777 storage/
-#chmod 777 ./storage/framework/sessions
-#npm install --save-dev node-sass 
-#composer install
-#yarn
-#php artisan storage:link
+chown -R www-data:www-data /var/www/html/canvas
+chmod -R 777 /var/www/html/canvas/storage
+cd canvas
 wget https://raw.githubusercontent.com/PastaGringo/scripts/master/.env_canvas >/dev/null 2>&1 
 mv .env_canvas .env 
 echo ""
