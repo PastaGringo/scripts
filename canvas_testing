@@ -3,7 +3,7 @@ clear
 echo ""
 echo "Canvas : Hello"
 echo "Canvas : How are you?"
-echo "Canvas : I'm currently being installed, I will come back in few minutes..."
+echo "Canvas : I'm currently being installed, I will come back in a few minutes..."
 echo
 echo "Installing dependencies ..."
 apt-get update >/dev/null 2>&1 
