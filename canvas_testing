@@ -1,25 +1,26 @@
-#!/bin/bash
-echo "Laraval env installer"
+#!/bin/bas
+echo "Canvas : Hello"
+echo "Canvas : How are you?"
+echo "Canvas : I'm currently being installed, I will come back in few minutes..."
 echo "Please wait ..."
 echo
-#INSTALL DEPENDENCIES
-#curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-#curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
-#echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-apt-get install -y apache2 php git curl unzip php-mbstring php-xml phpunit php-sqlite3 php7.0-mysql mariadb-server libapache2-mod-php 
-#apt-get install -y yarn nodejs
+echo "Installing dependencies ..."
+apt-get update >/dev/null 2>&1 
+apt-get install -y apache2 php git curl unzip php-mbstring php-xml phpunit php-sqlite3 php7.0-mysql mariadb-server libapache2-mod-php >/dev/null 2>&1 
 #INSTALL COMPOSER
-php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" >/dev/null 2>&1 
 php -r "if (hash_file('SHA384', 'composer-setup.php') === '61069fe8c6436a4468d0371454cf38a812e451a14ab1691543f25a9627b97ff96d8753d92a00654c21e2212a5ae1ff36') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
-php composer-setup.php
-php -r "unlink('composer-setup.php');"
-mv composer.phar /usr/local/bin/composer
+php composer-setup.php >/dev/null 2>&1 
+php -r "unlink('composer-setup.php');" >/dev/null 2>&1 
+mv composer.phar /usr/local/bin/composer >/dev/null 2>&1 
+echo "Configuring MySQL ..."
 #MySQL
-mysql --user="root" --password="$password" --execute="CREATE DATABASE canvas DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;"
-mysql --user="root" --password="$password" --execute="CREATE USER 'canvas'@'localhost' IDENTIFIED BY 'secret';"
-mysql --user="root" --password="$password" --execute="GRANT ALL PRIVILEGES ON canvas.* TO 'canvas'@'localhost' WITH GRANT OPTION;"
-mysql --user="root" --password="$password" --execute="FLUSH PRIVILEGES;"  
+mysql --user="root" --password="$password" --execute="CREATE DATABASE canvas_db DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;" >/dev/null 2>&1 
+mysql --user="root" --password="$password" --execute="CREATE USER 'canvas_usr'@'localhost' IDENTIFIED BY 'secret';" >/dev/null 2>&1  
+mysql --user="root" --password="$password" --execute="GRANT ALL PRIVILEGES ON canvas_db.* TO 'canvas_usr'@'localhost' WITH GRANT OPTION;" >/dev/null 2>&1 
+mysql --user="root" --password="$password" --execute="FLUSH PRIVILEGES;" >/dev/null 2>&1 
 #Apache2
+echo "Configuring Apache2 ..."
 cd /etc/apache2/sites-available
 cat > /etc/apache2/sites-available/canvas.conf <<EOF
 <VirtualHost *:80>
@@ -33,13 +34,14 @@ cat > /etc/apache2/sites-available/canvas.conf <<EOF
     CustomLog ${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>
 EOF
-a2dissite 000-default.conf
-a2ensite canvas.conf
-a2enmod rewrite
-service apache2 restart
+a2dissite 000-default.conf >/dev/null 2>&1 
+a2ensite canvas.conf >/dev/null 2>&1 
+a2enmod rewrite >/dev/null 2>&1 
+service apache2 restart >/dev/null 2>&1 
 #CANVAS
+echo "Composing Canvas ..."
 cd /var/www/html
-composer create-project --prefer-dist cnvs/canvas canvas
+composer create-project --prefer-dist cnvs/canvas canvas >/dev/null 2>&1 
 cd canvas 
 chgrp -R www-data /var/www/html/canvas
 chmod -R 775 /var/www/html/canvas/storage
@@ -47,6 +49,16 @@ chmod -R 775 /var/www/html/canvas/storage
 #composer install
 #yarn
 #php artisan storage:link
-wget https://raw.githubusercontent.com/PastaGringo/scripts/master/.env_canvas
+wget https://raw.githubusercontent.com/PastaGringo/scripts/master/.env_canvas >/dev/null 2>&1 
 mv .env_canvas .env 
+echo ""
+echo "Starting the Canvas wizard, simply do :"
+echo "NO to the first question"
+echo "YES to the second question"
+echo "The rest depends on you!"
+echo ""
 php artisan canvas:install
+echo ""
+echo "Enjoy blogging with Canvas !"
+
+
