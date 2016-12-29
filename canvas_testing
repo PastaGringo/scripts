@@ -46,10 +46,6 @@ composer create-project --prefer-dist cnvs/canvas canvas >/dev/null 2>&1
 chgrp -R www-data /var/www/html/canvas
 cd canvas 
 chmod 777 ./storage/framework/sessions
-#npm install --save-dev node-sass 
-#composer install
-#yarn
-#php artisan storage:link
 wget https://raw.githubusercontent.com/PastaGringo/scripts/master/.env_canvas >/dev/null 2>&1 
 mv .env_canvas .env 
 echo ""
