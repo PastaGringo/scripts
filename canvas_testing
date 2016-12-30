@@ -32,7 +32,7 @@ cat > /etc/apache2/sites-available/canvas.conf <<EOF
         AllowOverride All
     </Directory>
     ErrorLog /var/log/apache2/canvas-error.log
-    CustomLog /var/log/apache2/canvas-access.log
+    CustomLog /var/log/apache2/canvas-access.log combined
 </VirtualHost>
 EOF
 a2dissite 000-default.conf >/dev/null 2>&1 
