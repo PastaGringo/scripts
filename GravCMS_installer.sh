@@ -16,7 +16,8 @@ echo "extension=yaml.so" | tee /etc/php/7.0/mods-available/yaml.ini
 ln -s /etc/php/7.0/mods-available/yaml.ini /etc/php/7.0/fpm/conf.d/20-yaml.ini
 ln -s /etc/php/7.0/mods-available/yaml.ini /etc/php/7.0/cli/conf.d/20-yaml.ini
 service php7.0-fpm restart
-curl -sS https://getcomposer.org/installer | php mv composer.phar /usr/local/bin/composer
+curl -sS https://getcomposer.org/installer
+php mv composer.phar /usr/local/bin/composer
 cat > /etc/php/7.0/fpm/pool.d/www-data.conf<<EOF
 [www-data]
 user = www-data
