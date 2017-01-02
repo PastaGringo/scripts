@@ -4,7 +4,7 @@ echo "Hello! Welcome to the Grav CMS installer"
 echo ""
 apt-get update -y sudo apt-get upgrade -y
 apt-get install software-properties-common git nano curl build-essential libyaml-dev -y
-apt-get install php7.0 php7.0-fpm php7.0-cli php7.0-gd php7.0-mbstring php-pear php7.0-curl php7.0-dev php7.0-opcache php7.0-xml -y
+apt-get install php7.0 php7.0-fpm php7.0-cli php7.0-gd php7.0-mbstring php-pear php7.0-curl php7.0-dev php7.0-opcache php7.0-xml php7.0-zip -y
 echo "extension=apcu.so" | tee /etc/php/7.0/mods-available/apcu.ini
 pecl install apcu
 ln -s /etc/php/7.0/mods-available/apcu.ini /etc/php/7.0/fpm/conf.d/20-apcu.ini sudo ln -s /etc/php/7.0/mods-available/apcu.ini /etc/php/7.0/cli/conf.d/20-apcu.ini
