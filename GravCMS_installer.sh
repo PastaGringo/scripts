@@ -1,6 +1,7 @@
 #!/bin/bash
 echo ""
 echo "Hello! Welcome to the Grav CMS installer"
+apt-get install language-pack-fr -y
 echo ""
 apt-get update -y 
 apt-get upgrade -y
