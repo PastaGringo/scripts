@@ -1,0 +1,61 @@
+#!/bin/bash
+clear
+echo ""
+echo "Canvas : Hello"
+echo "Canvas : How are you?"
+echo "Canvas : I'm currently being installed, I will come back in few minutes..."
+echo
+echo "Installing dependencies ..."
+apt-get update  
+apt-get install -y apache2 php git curl unzip php-mbstring php-xml phpunit php-sqlite3 php7.0-mysql mariadb-server libapache2-mod-php  
+#INSTALL COMPOSER
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"  
+php -r "if (hash_file('SHA384', 'composer-setup.php') === '61069fe8c6436a4468d0371454cf38a812e451a14ab1691543f25a9627b97ff96d8753d92a00654c21e2212a5ae1ff36') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"  
+php composer-setup.php  
+php -r "unlink('composer-setup.php');"  
+mv composer.phar /usr/local/bin/composer  
+echo "Configuring MySQL ..."
+#MySQL
+mysql --user="root" --password="$password" --execute="CREATE DATABASE canvas_db DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;"  
+mysql --user="root" --password="$password" --execute="CREATE USER 'canvas_usr'@'localhost' IDENTIFIED BY 'secret';"   
+mysql --user="root" --password="$password" --execute="GRANT ALL PRIVILEGES ON canvas_db.* TO 'canvas_usr'@'localhost' WITH GRANT OPTION;"  
+mysql --user="root" --password="$password" --execute="FLUSH PRIVILEGES;"  
+#Apache2
+echo "Configuring Apache2 ..."
+cd /etc/apache2/sites-available
+cat > /etc/apache2/sites-available/canvas.conf <<EOF
+<VirtualHost *:80>
+    ServerName localhost
+    ServerAdmin webmaster@localhost
+    DocumentRoot /var/www/html/canvas/public
+    <Directory /var/www/html/canvas/public>
+        AllowOverride All
+    </Directory>
+    ErrorLog /var/log/apache2/canvas-error.log
+    CustomLog /var/log/apache2/canvas-access.log combined
+</VirtualHost>
+EOF
+a2dissite 000-default.conf  
+a2ensite canvas.conf  
+a2enmod rewrite  
+service apache2 restart  
+#CANVAS
+echo "Composing Canvas ..."
+cd /var/www/html
+composer create-project --prefer-dist cnvs/canvas canvas  
+chown -R www-data:www-data /var/www/html/canvas
+chmod -R 777 /var/www/html/canvas/storage
+cd canvas
+wget https://raw.githubusercontent.com/PastaGringo/scripts/master/.env_canvas  
+mv .env_canvas .env 
+echo ""
+echo "Starting the Canvas wizard, simply do :"
+echo "NO to the first question"
+echo "YES to the second question"
+echo "The rest depends on you!"
+echo ""
+php artisan canvas:install
+echo ""
+echo "Enjoy blogging with Canvas !"
+
+
