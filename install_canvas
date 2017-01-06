@@ -42,9 +42,9 @@ service apache2 restart
 #CANVAS
 echo "Composing Canvas ..."
 cd /var/www/html
-composer create-project --prefer-dist cnvs/canvas canvas  
-chown -R www-data:www-data /var/www/html/canvas
+composer create-project --prefer-dist cnvs/canvas canvas
 chmod -R 777 /var/www/html/canvas/storage
+chown -R www-data:www-data /var/www/html/canvas
 cd canvas
 wget https://raw.githubusercontent.com/PastaGringo/scripts/master/.env_canvas  
 mv .env_canvas .env 
