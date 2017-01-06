@@ -44,7 +44,6 @@ echo "Composing Canvas ..."
 cd /var/www/html
 composer create-project --prefer-dist cnvs/canvas canvas
 chmod -R 777 /var/www/html/canvas/storage
-chown -R www-data:www-data /var/www/html/canvas
 cd canvas
 wget https://raw.githubusercontent.com/PastaGringo/scripts/master/.env_canvas  
 mv .env_canvas .env 
@@ -55,6 +54,7 @@ echo "YES to the second question"
 echo "The rest depends on you!"
 echo ""
 php artisan canvas:install
+chown -R www-data:www-data /var/www/html/canvas
 echo ""
 echo "Enjoy blogging with Canvas !"
 
