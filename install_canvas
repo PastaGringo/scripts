@@ -27,8 +27,8 @@ cat > /etc/apache2/sites-available/canvas.conf <<EOF
 <VirtualHost *:80>
     ServerName localhost
     ServerAdmin webmaster@localhost
-    DocumentRoot /var/www/html/canvas/public
-    <Directory /var/www/html/canvas/public>
+    DocumentRoot /var/www/html/canvas/blog/public
+    <Directory /var/www/html/canvas/blog/public>
         AllowOverride All
     </Directory>
     ErrorLog /var/log/apache2/canvas-error.log
@@ -42,9 +42,11 @@ service apache2 restart
 #CANVAS
 echo "Composing Canvas ..."
 cd /var/www/html
-composer create-project --prefer-dist cnvs/canvas canvas
-chmod -R 777 /var/www/html/canvas/storage
+mkdir canvas
 cd canvas
+composer create-project --prefer-dist cnvs/canvas blog
+chmod -R 777 /var/www/html/canvas/blog/storage
+cd blog
 wget https://raw.githubusercontent.com/PastaGringo/scripts/master/.env_canvas  
 mv .env_canvas .env 
 echo ""
