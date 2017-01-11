@@ -9,7 +9,10 @@ templates:
         - '2017'                                                                                                                                                               
                                                                                                                                                                                
 tasks:                                                                                                                                                                         
-  feed-720p:                                                                                                                                                                   
+  feed-720p:
+    #duplicates:
+    #  field: imdb_id
+    #  action: accept
     template: movies                                                                                                                                                           
     priority: 2                                                                                                                                                                
     imdb:                                                                                                                                                                      
