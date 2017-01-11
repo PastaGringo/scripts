@@ -12,7 +12,7 @@ tasks:
   feed-720p:
     #duplicates:
     #  field: imdb_id
-    #  action: accept
+    #  action: reject
     template: movies                                                                                                                                                           
     priority: 2                                                                                                                                                                
     imdb:                                                                                                                                                                      
