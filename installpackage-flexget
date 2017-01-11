@@ -1,0 +1,69 @@
+#!/bin/bash
+echo
+echo "Welcome to the Flexget QuickBox installer !"
+echo
+echo "Before setting up Flexget, I need to know your t411's logs"
+echo -n "T411 username: "
+read t411usr
+echo -n "T411 password: "
+read t411pwd
+echo "Thanks!"
+echo ""
+echo "Starting the installation ..."
+echo ""
+pip install flexget
+mkdir ~/.config/flexget
+cat > ~/.config/flexget/config.yml <<EOF
+templates:                                                                                                                                                                     
+  movies:                                                                                                                                                                      
+    download: /home/pastadmin/torrents/rtorrent/                                                                                                                               
+    exists_movie:                                                                                                                                                              
+      path: /home/pastadmin/torrents/rtorrent/                                                                                                                                 
+    regexp:                                                                                                                                                                    
+      accept:                                                                                                                                                                  
+        - '2016'
+        - '2017'                                                                                                                                                               
+                                                                                                                                                                               
+tasks:                                                                                                                                                                         
+  feed-720p:                                                                                                                                                                   
+    template: movies                                                                                                                                                           
+    priority: 2                                                                                                                                                                
+    imdb:                                                                                                                                                                      
+      min_score: 5                                                                                                                                                             
+      min_year: 2016                                                                                                                                                           
+    t411:                                                                                                                                                                      
+      category: Film                                                                                                                                                           
+      terms:                                                                                                                                                                   
+        - Français (VFF/Truefrench)                                                                                                                                            
+        - Multi (Français inclus)                                                                                                                                              
+        - HDrip 720                                                                                                                                                            
+        - Web-DL 720                                                                                                                                                           
+        - TVripHD 720                                                                                                                                                          
+    rtorrent:                                                                                                                                                                  
+      uri: scgi://localhost:58519                                                                                                                                              
+      path: /home/pastadmin/torrents/rtorrent/                                                                                                                                 
+      custom1: flexget                                                                                                                                                         
+                                                                                                                                                                               
+  check_movies:                                                                                                                                                                
+    template: movies                                                                                                                                                           
+    t411:                                                                                                                                                                      
+      category: Film                                                                                                                                                           
+      terms:                                                                                                                                                                   
+        - Français (VFF/Truefrench)                                                                                                                                            
+        - Multi (Français inclus)                                                                                                                                              
+        - HDrip 720                                                                                                                                                            
+        - Web-DL 720                                                                                                                                                           
+        - TVripHD 720                                                                                                                                                          
+    exists_movie:                                                                                                                                                              
+      path: /home/pastadmin/torrents/rtorrent/                                                                                                                                 
+                                                                                                                                                                               
+                                                                                                                                                                               
+#web_server:                                                                                                                                                                    
+#  bind: 0.0.0.0 # IP V4                                                                                                                                                        
+#  port: 3539 # Valid port number                                                                                                                                               
+#  ssl_certificate: '/etc/ssl/private/myCert.pem' # Path to certificate file                                                                                                   
+#  ssl_private_key: '/etc/ssl/private/myKey.key' # Path to private key file                                                                                                    
+# web_ui: yes # Web-UI can optionally be disabeled, only API will run 
+EOF
+flexget t411 add-auth $t411usr $t411pwd 
+flexget daemon start --daemonize
