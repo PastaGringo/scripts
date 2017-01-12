@@ -1,0 +1,23 @@
+tasks:                                                                                                                                                                         
+  feed-720p:                                                                                                                                                                                                                                                                                                                       
+    template: movies                                                                                                                                                           
+    priority: 2                                                                                                                                                                
+    imdb:                                                                                                                                                                      
+      min_score: 5                                                                                                                                                             
+      min_year: 2016                                                                                                                                                           
+    t411:                                                                                                                                                                      
+      category: Film                                                                                                                                                           
+      terms:                                                                                                                                                                   
+        - Français (VFF/Truefrench)                                                                                                                                            
+        - Multi (Français inclus)                                                                                                                                              
+        - HDrip 720                                                                                                                                                            
+        - Web-DL 720                                                                                                                                                           
+        - TVripHD 720                                                                                                                                                          
+    imdb_lookup: yes                                                                                                                                                           
+    duplicates:                                                                                                                                                                
+      field: imdb_id                                                                                                                                                           
+      action: reject                                                                                                                                                           
+    rtorrent:                                                                                                                                                                  
+      uri: scgi://localhost:58519                                                                                                                                              
+      path: /home/pastadmin/torrents/rtorrent/                                                                                                                                 
+      custom1: flexget
