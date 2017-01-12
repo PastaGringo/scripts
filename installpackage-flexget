@@ -55,7 +55,7 @@ EOF
 echo ""
 flexget t411 add-auth $t411usr $t411pwd 
 flexget web passwd $flexgetwebuipwd
-flexget daemon start --d
+flexget daemon start -d
 echo ""
 echo "Flexget is installed !"
 echo ""
