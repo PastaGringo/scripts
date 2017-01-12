@@ -2,16 +2,19 @@
 echo
 echo "Welcome to the Flexget QuickBox installer !"
 echo
-echo "Before setting up Flexget, I need to know your t411's logs"
+echo "Before setting up Flexget, I need to know fews things"
 echo -n "T411 username: "
 read t411usr
 echo -n "T411 password: "
 read t411pwd
+echo -n "Flexget Web UI password?: "
+read flexgetwebuipwd
 echo "Thanks!"
 echo ""
 echo "Starting the installation ..."
 echo ""
 sudo pip install flexget
+mkdir ~/.config
 mkdir ~/.config/flexget
 cat > ~/.config/flexget/config.yml <<EOF
 templates:                                                                                                                                                                     
@@ -56,7 +59,7 @@ tasks:
         - TVripHD 720                                                                                                                                                          
     exists_movie:                                                                                                                                                              
       path: /home/pastadmin/torrents/rtorrent/                                                                                                                                 
-                                                                                                                                                                               
+                                                                                                                                                 bash                               
                                                                                                                                                                                
 web_server:                                                                                                                                                                    
   bind: 0.0.0.0 # IP V4                                                                                                                                                        
@@ -67,4 +70,5 @@ web_server:
 EOF
 echo ""
 flexget t411 add-auth $t411usr $t411pwd 
+flexget web passwd $flexgetwebuipwd
 flexget daemon start --daemonize
