@@ -46,21 +46,7 @@ tasks:
       uri: scgi://localhost:58519                                                                                                                                              
       path: /home/pastadmin/torrents/rtorrent/                                                                                                                                 
       custom1: flexget                                                                                                                                                         
-                                                                                                                                                                               
-  check_movies:                                                                                                                                                                
-    template: movies                                                                                                                                                           
-    t411:                                                                                                                                                                      
-      category: Film                                                                                                                                                           
-      terms:                                                                                                                                                                   
-        - Français (VFF/Truefrench)                                                                                                                                            
-        - Multi (Français inclus)                                                                                                                                              
-        - HDrip 720                                                                                                                                                            
-        - Web-DL 720                                                                                                                                                           
-        - TVripHD 720                                                                                                                                                          
-    exists_movie:                                                                                                                                                              
-      path: /home/pastadmin/torrents/rtorrent/                                                                                                                                 
-                                                                                                                                                 bash                               
-                                                                                                                                                                               
+                                                                                                                                                                                                      
 web_server:                                                                                                                                                                    
   bind: 0.0.0.0 # IP V4                                                                                                                                                        
   port: 3539 # Valid port number                                                                                                                                               
