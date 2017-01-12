@@ -63,7 +63,7 @@ web_server:
   port: 3539 # Valid port number                                                                                                                                               
   ssl_certificate: '/etc/ssl/private/myCert.pem' # Path to certificate file                                                                                                   
   ssl_private_key: '/etc/ssl/private/myKey.key' # Path to private key file                                                                                                    
- web_ui: yes # Web-UI can optionally be disabeled, only API will run 
+  web_ui: yes # Web-UI can optionally be disabeled, only API will run 
 EOF
 echo ""
 flexget t411 add-auth $t411usr $t411pwd 
