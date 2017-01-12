@@ -11,7 +11,7 @@ echo "Thanks!"
 echo ""
 echo "Starting the installation ..."
 echo ""
-pip install flexget
+sudo pip install flexget
 mkdir ~/.config/flexget
 cat > ~/.config/flexget/config.yml <<EOF
 templates:                                                                                                                                                                     
@@ -58,12 +58,13 @@ tasks:
       path: /home/pastadmin/torrents/rtorrent/                                                                                                                                 
                                                                                                                                                                                
                                                                                                                                                                                
-#web_server:                                                                                                                                                                    
-#  bind: 0.0.0.0 # IP V4                                                                                                                                                        
-#  port: 3539 # Valid port number                                                                                                                                               
-#  ssl_certificate: '/etc/ssl/private/myCert.pem' # Path to certificate file                                                                                                   
-#  ssl_private_key: '/etc/ssl/private/myKey.key' # Path to private key file                                                                                                    
-# web_ui: yes # Web-UI can optionally be disabeled, only API will run 
+web_server:                                                                                                                                                                    
+  bind: 0.0.0.0 # IP V4                                                                                                                                                        
+  port: 3539 # Valid port number                                                                                                                                               
+  ssl_certificate: '/etc/ssl/private/myCert.pem' # Path to certificate file                                                                                                   
+  ssl_private_key: '/etc/ssl/private/myKey.key' # Path to private key file                                                                                                    
+ web_ui: yes # Web-UI can optionally be disabeled, only API will run 
 EOF
+echo ""
 flexget t411 add-auth $t411usr $t411pwd 
 flexget daemon start --daemonize
