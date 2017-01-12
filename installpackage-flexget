@@ -1,4 +1,4 @@
-﻿#!/bin/bash
+#!/bin/bash
 echo
 echo "Welcome to the Flexget QuickBox installer !"
 echo
@@ -18,7 +18,7 @@ mkdir ~/.config
 mkdir ~/.config/flexget
 cat > ~/.config/flexget/config.yml <<EOF
 tasks:                                                                                                                                                                         
-  feed-720p:                                                                                                                                                                      
+  feed-720p:                                                                                                                                                             
   disable: seen                                                                                                                                                              
     exists_movie:                                                                                                                                                              
       path: /home/pastadmin/torrents/rtorrent/                                                                                                                                 
@@ -43,7 +43,7 @@ tasks:
     rtorrent:                                                                                                                                                                  
       uri: scgi://localhost:58519                                                                                                                                              
       path: /home/pastadmin/torrents/rtorrent/                                                                                                                                 
-      custom1: flexget                                                                                                                                                                           
+      custom1: flexget                                                                                                                                            
 
 web_server:                                                                                                                                                                    
   bind: 0.0.0.0 # IP V4                                                                                                                                                        
