@@ -17,19 +17,13 @@ sudo pip install flexget
 mkdir ~/.config
 mkdir ~/.config/flexget
 cat > ~/.config/flexget/config.yml <<EOF
-templates:                                                                                                                                                                     
-  movies:                                                                                                                                                                      
-    download: /home/pastadmin/torrents/rtorrent/                                                                                                                               
+tasks:                                                                                                                                                                         
+  feed-720p:                                                                                                                                                                      
+  disable: seen                                                                                                                                                              
     exists_movie:                                                                                                                                                              
       path: /home/pastadmin/torrents/rtorrent/                                                                                                                                 
-    regexp:                                                                                                                                                                    
-      accept:                                                                                                                                                                  
-        - '2016'
-        - '2017'                                                                                                                                                               
-                                                                                                                                                                               
-tasks:                                                                                                                                                                         
-  feed-720p:                                                                                                                                                                   
-    template: movies                                                                                                                                                           
+      lookup: imdb                                                                                                                                                             
+      type: files                                                                                                                                                              
     priority: 2                                                                                                                                                                
     imdb:                                                                                                                                                                      
       min_score: 5                                                                                                                                                             
@@ -42,11 +36,15 @@ tasks:
         - HDrip 720                                                                                                                                                            
         - Web-DL 720                                                                                                                                                           
         - TVripHD 720                                                                                                                                                          
+    imdb_lookup: yes                                                                                                                                                           
+    duplicates:                                                                                                                                                                
+      field: imdb_id                                                                                                                                                           
+      action: reject                                                                                                                                                           
     rtorrent:                                                                                                                                                                  
       uri: scgi://localhost:58519                                                                                                                                              
       path: /home/pastadmin/torrents/rtorrent/                                                                                                                                 
-      custom1: flexget                                                                                                                                                         
-                                                                                                                                                                                                      
+      custom1: flexget                                                                                                                                                                           
+
 web_server:                                                                                                                                                                    
   bind: 0.0.0.0 # IP V4                                                                                                                                                        
   port: 3539 # Valid port number                                                                                                                                               
@@ -57,4 +55,7 @@ EOF
 echo ""
 flexget t411 add-auth $t411usr $t411pwd 
 flexget web passwd $flexgetwebuipwd
-flexget daemon start --daemonize
+flexget daemon start --d
+echo ""
+echo "Flexget is installed !"
+echo ""
