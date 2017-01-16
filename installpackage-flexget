@@ -35,7 +35,8 @@ tasks:
         - Multi (Français inclus)                                                                                                                                              
         - HDrip 720                                                                                                                                                            
         - Web-DL 720                                                                                                                                                           
-        - TVripHD 720                                                                                                                                                          
+        - TVripHD 720     
+      max_results: 10
     imdb_lookup: yes                                                                                                                                                           
     duplicates:                                                                                                                                                                
       field: imdb_id                                                                                                                                                           
@@ -48,8 +49,8 @@ tasks:
 web_server:                                                                                                                                                                    
   bind: 0.0.0.0 # IP V4                                                                                                                                                        
   port: 3539 # Valid port number                                                                                                                                               
-  ssl_certificate: '/etc/ssl/private/myCert.pem' # Path to certificate file                                                                                                   
-  ssl_private_key: '/etc/ssl/private/myKey.key' # Path to private key file                                                                                                    
+  #ssl_certificate: '/etc/ssl/private/myCert.pem' # Path to certificate file                                                                                                   
+  #ssl_private_key: '/etc/ssl/private/myKey.key' # Path to private key file                                                                                                    
   web_ui: yes # Web-UI can optionally be disabeled, only API will run 
 EOF
 echo ""
