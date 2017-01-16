@@ -19,7 +19,7 @@ mkdir ~/.config/flexget
 cat > ~/.config/flexget/config.yml <<EOF
 tasks:                                                                                                                                                                         
   feed-720p:                                                                                                                                                             
-  disable: seen                                                                                                                                                              
+    disable: seen                                                                                                                                                              
     exists_movie:                                                                                                                                                              
       path: /home/pastadmin/torrents/rtorrent/                                                                                                                                 
       lookup: imdb                                                                                                                                                             
