@@ -71,9 +71,9 @@ systemctl daemon-reload
 systemctl start radarrr.service
 sleep 10
 systemctl stop radarrr.service
+sleep 10
 sed -i "s/<UrlBase>.*/<UrlBase>radarrr<\/UrlBase>/g" /home/${username}/.config/Radarr/config.xml
 sed -i "s/<BindAddress>.*/<BindAddress>127.0.0.1<\/BindAddress>/g" /home/${username}/.config/Radarr/config.xml
-sleep 10
 }
 
 function _radarr_start() {
