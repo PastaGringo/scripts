@@ -27,13 +27,13 @@ function _radarr_intro() {
 
 function _radarr_dependencies() {
 	apt update
-	apt-get install -y libmono-cil-dev curl mediainfo
+	apt-get install -y libmono-cil-dev curl mediainfo >/dev/null 2>&1
 }
 
 function _radarr_install() {
 	cd /opt
-	wget https://github.com/Radarr/Radarr/releases/download/v0.2.0.210/Radarr.develop.0.2.0.210.linux.tar.gz
-	tar -xvzf /opt/Radarr.develop.0.2.0.210.linux.tar.gz
+	wget https://github.com/Radarr/Radarr/releases/download/v0.2.0.210/Radarr.develop.0.2.0.210.linux.tar.gz >/dev/null 2>&1
+	tar -xvzf /opt/Radarr.develop.0.2.0.210.linux.tar.gz >/dev/null 2>&1
 	rm -rf /opt/Radarr.develop.0.2.0.210.linux.tar.gz
 }
 
@@ -66,7 +66,7 @@ Require user ${username}
 EOF
 chown -R pastadmin: /opt/Radarr/
 chown www-data: /etc/apache2/sites-enabled/radarr.conf
-systemctl enable radarr.service
+systemctl enable radarr.service >/dev/null 2>&1
 systemctl daemon-reload
 systemctl start radarr.service
 sleep 10
