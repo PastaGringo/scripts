@@ -24,8 +24,7 @@ User=${username}
 Group=${username}
 
 Type=simple
-ExecStart=/usr/bin/screen -f -a -d -m -S radarr mono /opt/Radarr/Radarr.exe -nobrowser
-ExecStop=-/bin/kill -HUP
+ExecStart=/usr/bin/mono /opt/Radarr/Radarr.exe -nobrowser
 TimeoutStopSec=20
 KillMode=process
 Restart=on-failure
@@ -33,8 +32,6 @@ Restart=on-failure
 [Install]
 WantedBy=multi-user.target
 EOF
-
-
 
 cat > /etc/apache2/sites-enabled/radarr.conf <<EOF
 <Location /radarr>
@@ -55,6 +52,7 @@ systemctl enable radarr.service
 systemctl daemon-reload
 systemctl start radarr.service
 systemctl stop radarr.service
+sleep 10
 sed -i "s/<UrlBase>.*/<UrlBase>radarr<\/UrlBase>/g" /home/${username}/.config/Radarr/config.xml
 sed -i "s/<BindAddress>.*/<BindAddress>127.0.0.1<\/BindAddress>/g" /home/${username}/.config/Radarr/config.xml
 systemctl start radarr.service
