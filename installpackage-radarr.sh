@@ -14,12 +14,12 @@ apt-get install -y libmono-cil-dev curl mediainfo
 function _Radarr_install() {
 cd /opt
 wget https://github.com/Radarr/Radarr/releases/download/v0.2.0.210/Radarr.develop.0.2.0.210.linux.tar.gz
-tar -xvzf Radarr.develop.0.2.0.99.linux.tar.gz
-rm -rf Radarr.develop.0.2.0.99.linux.tar.gz
+tar -xvzf /opt/Radarr.develop.0.2.0.99.linux.tar.gz
+rm -rf /opt/Radarr.develop.0.2.0.99.linux.tar.gz
 }
 
 function _Radarr_setup() {
-cat > /usr/lib/systemd/system/radarr.service <<EOF
+cat > /etc/systemd/system/radarr.service <<EOF
 [Unit]
 Description=Radarr Daemon
 After=syslog.target network.target
