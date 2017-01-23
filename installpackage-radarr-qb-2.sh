@@ -74,6 +74,7 @@ systemctl stop radarr.service
 sleep 10
 sed -i "s/<UrlBase>.*/<UrlBase>radarr<\/UrlBase>/g" /home/${username}/.config/Radarr/config.xml
 sed -i "s/<BindAddress>.*/<BindAddress>127.0.0.1<\/BindAddress>/g" /home/${username}/.config/Radarr/config.xml
+service apache2 restart
 }
 
 function _radarr_start() {
@@ -104,6 +105,5 @@ _radarr_intro
 echo "Installing dependencies ... " >>"${OUTTO}" 2>&1;_radarr_dependencies
 echo "Installing Radar ... " >>"${OUTTO}" 2>&1;_radarr_install
 echo "Configuring Radar ... " >>"${OUTTO}" 2>&1;_radarr_configure
-echo "Downloading Radar ... " >>"${OUTTO}" 2>&1;_radarr_download
 echo "Starting Radar ... " >>"${OUTTO}" 2>&1;_radarr_start
 _radarr_exit
