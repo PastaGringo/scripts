@@ -38,7 +38,7 @@ function _radarr_install() {
 }
 
 function _radarr_configure() {
-cat > /etc/systemd/system/radarrr.service <<EOF
+cat > /etc/systemd/system/radarr.service <<EOF
 [Unit]
 Description=Radarr Daemon
 After=syslog.target network.target
@@ -54,10 +54,10 @@ Restart=on-failure
 WantedBy=multi-user.target
 EOF
 
-cat > /etc/apache2/sites-enabled/radarrr.conf <<EOF
-<Location /radarrr>
-ProxyPass http://localhost:7878/radarrr
-ProxyPassReverse http://localhost:7878/radarrr
+cat > /etc/apache2/sites-enabled/radarr.conf <<EOF
+<Location /radarr>
+ProxyPass http://localhost:7878/radarr
+ProxyPassReverse http://localhost:7878/radarr
 AuthType Digest
 AuthName "rutorrent"
 AuthUserFile '/etc/htpasswd'
@@ -65,25 +65,25 @@ Require user ${username}
 </Location>
 EOF
 chown -R pastadmin: /opt/Radarr/
-chown www-data: /etc/apache2/sites-enabled/radarrr.conf
-systemctl enable radarrr.service
+chown www-data: /etc/apache2/sites-enabled/radarr.conf
+systemctl enable radarr.service
 systemctl daemon-reload
-systemctl start radarrr.service
+systemctl start radarr.service
 sleep 10
-systemctl stop radarrr.service
+systemctl stop radarr.service
 sleep 10
-sed -i "s/<UrlBase>.*/<UrlBase>radarrr<\/UrlBase>/g" /home/${username}/.config/Radarr/config.xml
+sed -i "s/<UrlBase>.*/<UrlBase>radarr<\/UrlBase>/g" /home/${username}/.config/Radarr/config.xml
 sed -i "s/<BindAddress>.*/<BindAddress>127.0.0.1<\/BindAddress>/g" /home/${username}/.config/Radarr/config.xml
 }
 
 function _radarr_start() {
-systemctl start radarrr.service
-touch /install/.sonarr.lock
+systemctl start radarr.service
+touch /install/.radarr.lock
 }
 
 function _radarr_final() {
   echo "Radarr Install Complete!" >>"${OUTTO}" 2>&1;
-  echo "You can access it at  : http://$ip/radarrr" >>"${OUTTO}" 2>&1;
+  echo "You can access it at  : http://$ip/radarr" >>"${OUTTO}" 2>&1;
   echo >>"${OUTTO}" 2>&1;
   echo >>"${OUTTO}" 2>&1;
   echo "Close this dialog box to refresh your browser" >>"${OUTTO}" 2>&1;
