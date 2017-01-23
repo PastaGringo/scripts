@@ -400,8 +400,8 @@
                       <?php } ?>
                     </tr>
 					<tr>
-					  <td>Rapidleech</td>
-					  <td><?php echo T('Radarr'); ?></td>
+					  <td>Radarr</td>
+					  <td><?php echo T('RADARR'); ?></td>
 					  <?php if (file_exists("/install/.radarr.lock")) { ?>
 						<td style="vertical-align: middle; text-align: center"><a href="javascript:void()" data-toggle="modal" data-target="#radarrRemovalConfirm" class="btn btn-xs btn-success"><?php echo T('INSTALLED'); ?></a></td>
 					  <?php } else { ?>
