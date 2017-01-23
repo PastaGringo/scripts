@@ -51,12 +51,12 @@ systemctl enable radarr.service
 
 systemctl daemon-reload
 systemctl start radarr.service
+sleep 20
 systemctl stop radarr.service
-sleep 10
 sed -i "s/<UrlBase>.*/<UrlBase>radarr<\/UrlBase>/g" /home/${username}/.config/Radarr/config.xml
 sed -i "s/<BindAddress>.*/<BindAddress>127.0.0.1<\/BindAddress>/g" /home/${username}/.config/Radarr/config.xml
 systemctl start radarr.service
 
 echo "Radarr is installed !"
-echo "You can access it at  : http://$ip/radarr"
+echo "You can access it at  : $ip:7878"
 echo "Have fun!"
