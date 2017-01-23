@@ -16,12 +16,6 @@
 #   changes/dates in source files. Any modifications to our software
 #   including (via compiler) GPL-licensed code must also be made available
 #   under the GPL along with build & install instructions.
-echo
-echo "Radarr installer for Quickbox.io"
-echo
-
-username=$(cat /srv/rutorrent/home/db/master.txt)
-ip=$(curl -s http://whatismyip.akamai.com)
 
 function _radarr_intro() {
   echo "Radarr will now be installed." >>"${OUTTO}" 2>&1;
@@ -98,6 +92,13 @@ function _radarr_final() {
 function _radarr_exit() {
 	exit
 }
+
+OUTTO=/srv/rutorrent/home/db/output.log
+local_setup=/root/QuickBox/setup/
+local_packages=/root/QuickBox/packages/
+username=$(cat /srv/rutorrent/home/db/master.txt)
+distribution=$(lsb_release -is)
+ip=$(curl -s http://whatismyip.akamai.com)
 
 _radarr_intro
 echo "Installing dependencies ... " >>"${OUTTO}" 2>&1;_radarr_dependencies
