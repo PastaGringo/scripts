@@ -188,13 +188,13 @@
                     </tr>
                     <?php } ?>
 					
-					<?php if (file_exists("/install/.radarr.lock")) { ?>
-					 <tr>
-					  <td><?php echo "$rval"; ?> Radarr </td>
-					  <td class="text-center"><a href="javascript:;" onclick="location.href='?id=88&servicestart=radarr'" class="btn btn-xs btn-default"><i class="fa fa-refresh text-info"></i> <?php echo T('REFRESH'); ?></a></td>
-					  <td class="text-center"><?php echo "$cbodyr"; ?></td>
-					 </tr>
-					<?php } ?>
+		    <?php if (file_exists("/install/.radarr.lock")) { ?>
+		     <tr>
+		      <td><?php echo "$rval"; ?> Radarr </td>
+		      <td class="text-center"><a href="javascript:;" onclick="location.href='?id=88&servicestart=radarr'" class="btn btn-xs btn-default"><i class="fa fa-refresh text-info"></i> <?php echo T('REFRESH'); ?></a></td>
+		      <td class="text-center"><?php echo "$cbodyr"; ?></td>
+		     </tr>
+		    <?php } ?>
 
                     <?php if (file_exists("/install/.sabnzbd.lock")) { ?>
                     <tr>
@@ -399,15 +399,15 @@
                         <td style="vertical-align: middle; text-align: center"><a href="?installpackage-quota=true" data-toggle="modal" data-target="#sysResponse" id="quotaInstall" class="btn btn-xs btn-info"><?php echo T('INSTALL'); ?></a></td>
                       <?php } ?>
                     </tr>
-					<tr>
-					  <td>Radarr</td>
-					  <td><?php echo T('RADARR'); ?></td>
-					  <?php if (file_exists("/install/.radarr.lock")) { ?>
-						<td style="vertical-align: middle; text-align: center"><a href="javascript:void()" data-toggle="modal" data-target="#radarrRemovalConfirm" class="btn btn-xs btn-success"><?php echo T('INSTALLED'); ?></a></td>
-					  <?php } else { ?>
-						<td style="vertical-align: middle; text-align: center"><a href="?installpackage-radarr=true" data-toggle="modal" data-target="#sysResponse" id="quotaInstall" class="btn btn-xs btn-info"><?php echo T('INSTALL'); ?></a></td>
-					  <?php } ?>
-					</tr>
+		    <tr>
+		     <td>Radarr</td>
+		     <td><?php echo T('RADARR'); ?></td>
+		     <?php if (file_exists("/install/.radarr.lock")) { ?>
+		      <td style="vertical-align: middle; text-align: center"><a href="javascript:void()" data-toggle="modal" data-target="#radarrRemovalConfirm" class="btn btn-xs btn-success"><?php echo T('INSTALLED'); ?></a></td>
+		     <?php } else { ?>
+		      <td style="vertical-align: middle; text-align: center"><a href="?installpackage-radarr=true" data-toggle="modal" data-target="#sysResponse" id="quotaInstall" class="btn btn-xs btn-info"><?php echo T('INSTALL'); ?></a></td>
+		     <?php } ?>
+		    </tr>
                     <tr>
                       <td>Rapidleech</td>
                       <td><?php echo T('RAPIDLEECH'); ?></td>
