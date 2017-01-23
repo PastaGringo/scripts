@@ -3,8 +3,8 @@ echo
 echo "Radarr installer for Quickbox.io"
 echo
 
-MASTER=$(cat /srv/rutorrent/home/db/master.txt)
-ip=$(ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
+username=$(cat /srv/rutorrent/home/db/master.txt)
+ip=$(curl -s http://whatismyip.akamai.com) 
 
 apt update
 apt-get install -y libmono-cil-dev curl mediainfo
@@ -20,11 +20,12 @@ Description=Radarr Daemon
 After=syslog.target network.target
 
 [Service]
-User="${MASTER}"
-Group=<service group>
+User=${username}
+Group=${username}
 
 Type=simple
-ExecStart=/usr/bin/mono /opt/Radarr/Radarr.exe -nobrowser
+ExecStart=/usr/bin/screen -f -a -d -m -S radarr mono /opt/Radarr/Radarr.exe -nobrowser
+ExecStop=-/bin/kill -HUP
 TimeoutStopSec=20
 KillMode=process
 Restart=on-failure
@@ -33,8 +34,29 @@ Restart=on-failure
 WantedBy=multi-user.target
 EOF
 
-systemctl daemon-reload
+
+
+cat > /etc/apache2/sites-enabled/radarr.conf <<EOF
+<Location /radarr>
+ProxyPass http://localhost:7878/radarr
+ProxyPassReverse http://localhost:7878/radarr
+AuthType Digest
+AuthName "rutorrent"
+AuthUserFile '/etc/htpasswd'
+Require user ${username}
+</Location>
+EOF
+
+chown -R pastadmin: /opt/Radarr/
+chown www-data: /etc/apache2/sites-enabled/radarr.conf
+
 systemctl enable radarr.service
+
+systemctl daemon-reload
+systemctl start radarr.service
+systemctl stop radarr.service
+sed -i "s/<UrlBase>.*/<UrlBase>radarr<\/UrlBase>/g" /home/${username}/.config/Radarr/config.xml
+sed -i "s/<BindAddress>.*/<BindAddress>127.0.0.1<\/BindAddress>/g" /home/${username}/.config/Radarr/config.xml
 systemctl start radarr.service
 
 echo "Radarr is installed !"
