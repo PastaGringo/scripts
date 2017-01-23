@@ -26,7 +26,7 @@ function _radarr_intro() {
 }
 
 function _radarr_dependencies() {
-	apt update
+	apt update 2>&1
 	apt-get install -y libmono-cil-dev curl mediainfo >/dev/null 2>&1
 }
 
