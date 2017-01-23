@@ -58,5 +58,5 @@ sed -i "s/<BindAddress>.*/<BindAddress>127.0.0.1<\/BindAddress>/g" /home/${usern
 sleep 10
 systemctl start radarr.service
 echo "Radarr is installed !"
-echo "You can access it at  : $ip:7878"
+echo "You can access it at  : http://$ip/radarr"
 echo "Have fun!"
