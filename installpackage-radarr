@@ -106,4 +106,5 @@ echo "Installing dependencies ... " >>"${OUTTO}" 2>&1;_radarr_dependencies
 echo "Installing Radar ... " >>"${OUTTO}" 2>&1;_radarr_install
 echo "Configuring Radar ... " >>"${OUTTO}" 2>&1;_radarr_configure
 echo "Starting Radar ... " >>"${OUTTO}" 2>&1;_radarr_start
+_radarr_final
 #_radarr_exit
