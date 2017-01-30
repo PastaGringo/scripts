@@ -1,11 +1,12 @@
 #!/bin/bash
 echo "Installing dependecies for netdada ..."
-	sudo apt-get install -y zlib1g-dev uuid-dev libmnl-dev gcc make git autoconf autoconf-archive autogen automake pkg-config curl 
-	
+        sudo apt-get install -y zlib1g-dev uuid-dev libmnl-dev gcc make git autoconf autoconf-archive autogen auto$
+        
 echo "Installing netdata ..."
-	git clone https://github.com/firehol/netdata.git --depth=1 /tmp
-	cd /tmp/netdata
-	netdata-installer.sh --install /opt
+        cd /tmp
+        git clone https://github.com/firehol/netdata.git --depth=1 
+        cd /tmp/netdata
+        ./netdata-installer.sh --install /opt
   
 echo "NetData Install Complete!"
   echo "Close this dialog box to refresh your browser"
