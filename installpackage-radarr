@@ -90,9 +90,9 @@ function _radarr_final() {
   echo "Close this dialog box to refresh your browser" >>"${OUTTO}" 2>&1;
 }
 
-function _radarr_exit() {
-	exit
-}
+#function _radarr_exit() {
+#	exit
+#}
 
 OUTTO=/srv/rutorrent/home/db/output.log
 local_setup=/root/QuickBox/setup/
