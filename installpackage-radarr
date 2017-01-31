@@ -64,7 +64,7 @@ AuthUserFile '/etc/htpasswd'
 Require user ${username}
 </Location>
 EOF
-chown -R pastadmin: /opt/Radarr/
+chown -R ${username}: /opt/Radarr/
 chown www-data: /etc/apache2/sites-enabled/radarr.conf
 systemctl enable radarr.service >/dev/null 2>&1
 systemctl daemon-reload
