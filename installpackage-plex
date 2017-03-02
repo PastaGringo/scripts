@@ -20,7 +20,7 @@
 OUTTO="/srv/rutorrent/home/db/output.log"
 HOSTNAME1=$(hostname -s)
 PUBLICIP=$(ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
-local_setup=/root/QuickBox/setup/
+local_setup=/etc/QuickBox/setup/
 
 echo "Setting up hostname for plex ... "
     echo -ne "ServerName ${HOSTNAME1}" | sudo tee /etc/apache2/conf-available/fqdn.conf >/dev/null 2>&1
