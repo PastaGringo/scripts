@@ -3,7 +3,7 @@ echo Plex Unsupported AppStore v2 installation
 echo In progress...
 echo
 cd /tmp
-wget https://github.com/dagalufh/WebTools.bundle/releases/latest
+wget https://github.com/ukdtom/WebTools.bundle/releases/download/2.4.1/WebTools.bundle.zip
 unzip WebTools.bundle.zip
 rm WebTools.bundle.zip
 cp -r WebTools.bundle "/var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Plug-ins/"
