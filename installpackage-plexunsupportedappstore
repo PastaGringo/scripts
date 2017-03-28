@@ -1,0 +1,13 @@
+echo
+echo Plex Unsupported AppStore v2 installation
+echo In progress...
+echo
+cd /tmp
+wget https://github.com/dagalufh/WebTools.bundle/releases/latest
+unzip WebTools.bundle.zip
+rm WebTools.bundle.zip
+cp -r WebTools.bundle "/var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Plug-ins/"
+rm -rf WebTools.bundle
+echo Restarting Plex...
+systemctl restart plexmediaserver.service
+echo Done!
