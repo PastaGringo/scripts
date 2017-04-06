@@ -14,3 +14,8 @@ npm install -g yarn
 apt install redis-server redis-tools -y
 apt-get install postgresql postgresql-contrib -y
 sudo su - postgres
+psql <<EOF
+CREATE USER mastodon CREATEDB;
+\q
+EOF
+exit
