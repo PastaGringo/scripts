@@ -1,6 +1,6 @@
 #!/bin/bash
-adduser --disabled-password --disabled-login mastodon
-adduser --disabled-password --disabled-login postgre
+adduser --disabled-password --disabled-login --gecos "" mastodon
+adduser --disabled-password --disabled-login --gecos "" postgre
 whoami
 sudo -u mastodon bash << EOF
 echo "In"
