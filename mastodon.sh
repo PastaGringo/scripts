@@ -16,7 +16,6 @@ apt-get install postgresql postgresql-contrib -y
 su - postgres -c "psql -c 'CREATE USER mastodon CREATEDB;'"  
 adduser --disabled-password --disabled-login mastodon
 apt install autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm3 libgdbm-dev -y
-
 sudo -u mastodon bash << EOF
 git clone https://github.com/rbenv/rbenv.git ~/.rbenv
 cd ~/.rbenv && src/configure && make -C src
