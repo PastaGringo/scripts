@@ -23,17 +23,18 @@ su - postgres -c "psql -c 'CREATE USER mastodon CREATEDB;'"
 adduser --disabled-password --disabled-login --gecos "" mastodon
 apt install autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm3 libgdbm-dev rubygems build-essential -y
 sudo -u mastodon bash << EOF
-git clone https://github.com/rbenv/rbenv.git ~/.rbenv
-cd ~/.rbenv && src/configure && make -C src
-echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
-echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
-source ~/.bash_profile
-git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+git clone https://github.com/rbenv/rbenv.git /home/mastodon/.rbenv
+cd /home/mastodon/.rbenv && src/configure && make -C src
+whoami
+echo 'export PATH="/home/mastodon/.rbenv/bin:$PATH"' >> /home/mastodon/.bash_profile
+echo 'eval "$(rbenv init -)"' >> /home/mastodon/.bash_profile
+source /home/mastodon/.bash_profile
+git clone https://github.com/rbenv/ruby-build.git /home/mastodon/.rbenv/plugins/ruby-build
 echo
 echo RUBY  
 echo
 rbenv install 2.3.1
-cd ~
+cd /home/mastodon
 cd live
 gem install bundler
 bundle install --deployment --without development test
