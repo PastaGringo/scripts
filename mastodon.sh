@@ -35,6 +35,7 @@ echo RUBY
 echo
 rbenv install 2.3.1
 cd /home/mastodon
+git clone https://github.com/tootsuite/mastodon.git live
 cd live
 gem install bundler
 bundle install --deployment --without development test
