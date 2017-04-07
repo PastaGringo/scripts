@@ -1,7 +1,7 @@
 #!/bin/bash
 echo 
 echo mastodon.sh
-echo wget https://raw.githubusercontent.com/PastaGringo/scripts/master/mastodon.sh && bash ./mastodon.sh
+echo wget https://raw.githubusercontent.com/PastaGringo/scripts/master/mastodon.sh && chmod +x ./mastodon.sh && ./mastodon.sh                          
 echo go
 echo
 echo "deb http://httpredir.debian.org/debian jessie-backports main" >> /etc/apt/sources.list
