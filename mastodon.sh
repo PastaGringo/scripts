@@ -1,4 +1,5 @@
 #!/bin/bash
+cd /tmp
 echo 
 echo mastodon.sh
 #wget https://raw.githubusercontent.com/PastaGringo/scripts/master/mastodon.sh && chmod +x ./mastodon.sh && ./mastodon.sh                          
