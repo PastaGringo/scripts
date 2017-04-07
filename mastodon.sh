@@ -21,6 +21,7 @@ echo
 apt-get install postgresql postgresql-contrib -y
 su - postgres -c "psql -c 'CREATE USER mastodon CREATEDB;'"  
 adduser --disabled-password --disabled-login --gecos "" mastodon
+echo "mastodon ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers
 apt install autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm3 libgdbm-dev rubygems build-essential -y
 sudo -u mastodon bash << EOF
 git clone https://github.com/rbenv/rbenv.git /home/mastodon/.rbenv
@@ -37,7 +38,7 @@ rbenv install 2.3.1
 cd /home/mastodon
 git clone https://github.com/tootsuite/mastodon.git live
 cd live
-gem install bundler
+sudo gem install bundler
 bundle install --deployment --without development test
 yarn install
 cp .env.production.sample .env.production
