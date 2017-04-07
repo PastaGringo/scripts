@@ -22,7 +22,6 @@ apt-get install postgresql postgresql-contrib -y
 su - postgres -c "psql -c 'CREATE USER mastodon CREATEDB;'"  
 adduser --disabled-password --disabled-login --gecos "" mastodon
 apt install autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm3 libgdbm-dev -y
-
 sudo -u mastodon bash << EOF
 git clone https://github.com/rbenv/rbenv.git ~/.rbenv
 cd ~/.rbenv && src/configure && make -C src
@@ -40,4 +39,11 @@ cd live
 gem install bundler
 bundle install --deployment --without development test
 yarn install
+cp .env.production.sample .env.production
+sed -i '/REDIS_HOST/c\REDIS_HOST=localhost' .env.production
+sed -i '/DB_HOST/c\DB_HOST=/var/run/postgresql' .env.production
+sed -i '/DB_USER/c\DB_USER=mastodon' .env.production
+sed -i '/DB_NAME/c\DB_NAME=mastodon_production' .env.production
+sed -i '/LOCAL_DOMAIN/c\LOCAL_DOMAIN=domainedevotreinstance.tld' .env.production
 EOF
+
