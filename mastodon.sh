@@ -35,24 +35,14 @@ cd live
 bundle install --deployment --without development test
 yarn install
 cp .env.production.sample .env.production
-secret1=$(bundle exec rake secret)
-secret2=$(bundle exec rake secret)
-secret3=$(bundle exec rake secret)
-echo $secret1
-echo $secret2
-echo $secret3
-echo
-echo TEST BUNDLE
-echo
-bundle
 sed -i '/REDIS_HOST/c\REDIS_HOST=localhost' .env.production
 sed -i '/DB_HOST/c\DB_HOST=/var/run/postgresql' .env.production
 sed -i '/DB_USER/c\DB_USER=mastodon' .env.production
 sed -i '/DB_NAME/c\DB_NAME=mastodon_production' .env.production
 sed -i '/LOCAL_DOMAIN/c\LOCAL_DOMAIN=domainedevotreinstance.tld' .env.production
-sed -i '/PAPERCLIP_SECRET/c\PAPERCLIP_SECRET='$secret1'' .env.production
-sed -i '/SECRET_KEY_BASE/c\SECRET_KEY_BASE='$secret2'' .env.production
-sed -i '/OTP_SECRET/c\OTP_SECRET='$secret3'' .env.production
+sed -i '/PAPERCLIP_SECRET/c\PAPERCLIP_SECRET='$(bundle exec rake secret)'' .env.production
+sed -i '/SECRET_KEY_BASE/c\SECRET_KEY_BASE='$(bundle exec rake secret)'' .env.production
+sed -i '/OTP_SECRET/c\OTP_SECRET='$(bundle exec rake secret)'' .env.production
 echo
 echo Mise en place de la base de données  
 echo
