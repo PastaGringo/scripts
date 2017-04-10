@@ -67,7 +67,7 @@ RAILS_ENV=production bundle exec rails assets:precompile
 EOF
 exit
 
-cat >> /etc/systemd/system/mastodon-web.service <<EOL
+cat >> /etc/systemd/system/mastodon-web.service <<EOF
 [Unit]
  Description=mastodon-web
  After=network.target
@@ -84,9 +84,9 @@ cat >> /etc/systemd/system/mastodon-web.service <<EOL
 
 [Install]
  WantedBy=multi-user.target
-EOL
+EOF
 
-cat >> /etc/systemd/system/mastodon-sidekiq.service <<EOL
+cat >> /etc/systemd/system/mastodon-sidekiq.service <<EOF
 [Unit]
  Description=mastodon-sidekiq
  After=network.target
@@ -103,9 +103,9 @@ cat >> /etc/systemd/system/mastodon-sidekiq.service <<EOL
 
 [Install]
  WantedBy=multi-user.target
-EOL
+EOF
 
-cat >> /etc/systemd/system/mastodon-streaming.service <<EOL
+cat >> /etc/systemd/system/mastodon-streaming.service <<EOF
 [Unit]
  Description=mastodon-streaming
  After=network.target
@@ -122,7 +122,7 @@ cat >> /etc/systemd/system/mastodon-streaming.service <<EOL
 
 [Install]
  WantedBy=multi-user.target
-EOL
+EOF
 
 systemctl enable /etc/systemd/system/mastodon-*.service
 
@@ -138,7 +138,7 @@ echo "deb http://nginx.org/packages/debian/ $(lsb_release -sc) nginx" > /etc/apt
 apt update
 apt install nginx
 
-cat >> /etc/nginx/conf.d/mastodon.conf <<EOL
+cat >> /etc/nginx/conf.d/mastodon.conf <<EOF
 map $http_upgrade $connection_upgrade {
  default upgrade;
  '' close;
@@ -215,7 +215,7 @@ server {
 
  error_page 500 501 502 503 504 /500.html;
 }
-EOL
+EOF
 
 apt install -t jessie-backports letsencrypt -y
 service nginx stop
