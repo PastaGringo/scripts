@@ -7,7 +7,7 @@ domain=$(echo $domainwithtld | cut -d'.' -f 1)
 echo
 echo "One last thing... could you give your email accout ? (for letsencrypt certificate) : "
 read email 
-cat >> /etc/nginx/conf.d/mastodon.conf << EOF
+cat >> /etc/nginx/conf.d/mastodon.conf << 'EOT'
 map $http_upgrade $connection_upgrade {
   default upgrade;
   ''      close;
@@ -82,5 +82,5 @@ server {
 
   error_page 500 501 502 503 504 /500.html;
 }
-EOF
+EOT
 sed -i '/example.com/c\$domainwithtld' /etc/nginx/conf.d/mastodon.conf
