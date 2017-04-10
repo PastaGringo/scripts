@@ -126,7 +126,7 @@ echo
 wget -O - https://nginx.org/keys/nginx_signing.key | apt-key add -
 echo "deb http://nginx.org/packages/debian/ $(lsb_release -sc) nginx" > /etc/apt/sources.list.d/nginx.list
 apt update
-apt install nginx
+apt install nginx -y
 
 cat >> /etc/nginx/conf.d/mastodon.conf <<EOF
 map $http_upgrade $connection_upgrade {
