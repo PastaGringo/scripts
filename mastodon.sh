@@ -24,12 +24,12 @@ adduser --disabled-password --disabled-login --gecos "" mastodon
 echo "mastodon ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers
 apt install autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm3 libgdbm-dev -y
 su - mastodon << EOF
-git clone https://github.com/rbenv/rbenv.git ~/.rbenv
-cd ~/.rbenv && src/configure && make -C src
-echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
-echo ''eval "$(rbenv init -)"'' >> ~/.bash_profile
-source ~/.bash_profile
-git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+git clone https://github.com/rbenv/rbenv.git /home/mastodon/.rbenv
+cd /home/mastodon/.rbenv && src/configure && make -C src
+echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> /home/mastodon/.bash_profile
+echo ''eval "$(rbenv init -)"'' >> /home/mastodon/.bash_profile
+source /home/mastodon/.bash_profile
+git clone https://github.com/rbenv/ruby-build.git /home/mastodon/.rbenv/plugins/ruby-build
 rbenv install --verbose 2.3.1
 rbenv global 2.3.1
 gem install bundler
