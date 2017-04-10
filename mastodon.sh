@@ -27,8 +27,9 @@ su - mastodon << EOF
 git clone https://github.com/rbenv/rbenv.git /home/mastodon/.rbenv
 cd /home/mastodon/.rbenv && src/configure && make -C src
 echo 'export PATH="/home/mastodon/.rbenv/bin:$PATH"' >> /home/mastodon/.bash_profile
-echo ''eval "$(rbenv init -)"'' >> /home/mastodon/.bash_profile
-source /home/mastodon/.bash_profile
+EOF
+echo 'eval "$(rbenv init -)"' >> /home/mastodon/.bash_profile
+su - mastodon << EOF
 git clone https://github.com/rbenv/ruby-build.git /home/mastodon/.rbenv/plugins/ruby-build
 rbenv install --verbose 2.3.1
 rbenv global 2.3.1
