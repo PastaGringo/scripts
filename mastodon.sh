@@ -135,7 +135,7 @@ echo "deb http://nginx.org/packages/debian/ $(lsb_release -sc) nginx" > /etc/apt
 apt update
 apt install nginx -y
 
-cat >> /etc/nginx/conf.d/mastodon.conf <<EOF
+cat >> /etc/nginx/conf.d/mastodon.conf << 'EOT' #TO CHANGE
 map $http_upgrade $connection_upgrade {
  default upgrade;
  '' close;
@@ -143,8 +143,8 @@ map $http_upgrade $connection_upgrade {
 server {
  listen 80;
  listen [::]:80;
- server_name www.$domainwithtld $domainwithtld;
- return 301 https://$domainwithtld$request_uri;
+ server_name www.mstdn.io mstdn.io;
+ return 301 https://mstdn.io$request_uri;
 
  access_log /dev/null;
  error_log /dev/null;
@@ -153,19 +153,18 @@ server {
 server {
  listen 443 ssl http2;
  listen [::]:443 ssl http2;
- server_name www.$domainwithtld $domainwithtld;
+ server_name www.mstdn.io mstdn.io;
 
- if ($host = www.$domainwithtld) {
-  return 301 https://$domainwithtld$request_uri;
+ if ($host = www.mstdn.io) {
+  return 301 https://mstdn.io$request_uri;
  }
 
- access_log /var/log/nginx/$domainwithtld-access.log;
- error_log /var/log/nginx/$domainwithtld-error.log;
+ access_log /var/log/nginx/mstdn-access.log;
+ error_log /var/log/nginx/mstdn-error.log;
 
- ssl_certificate /etc/letsencrypt/live/www.$domainwithtld/fullchain.pem;
- ssl_certificate_key /etc/letsencrypt/live/www.$domainwithtld/privkey.pem;
+ ssl_certificate /etc/letsencrypt/live/www.mstdn.io/fullchain.pem;
+ ssl_certificate_key /etc/letsencrypt/live/www.mstdn.io/privkey.pem;
  ssl_protocols TLSv1.2;
- ssl_ecdh_curve secp384r1;
  ssl_ciphers EECDH+AESGCM:EECDH+CHACHA20:EECDH+AES;
  ssl_prefer_server_ciphers on;
  add_header Strict-Transport-Security "max-age=15552000; preload";
@@ -212,7 +211,11 @@ server {
 
  error_page 500 501 502 503 504 /500.html;
 }
-EOF
+EOT
+sed -i "/example.com/c\$domainwithtld" /etc/nginx/conf.d/mastodon.conf
+sed -i "s/\mstdn.io/${domainwithtld}/" /etc/nginx/conf.d/mastodon.conf
+sed -i "s/\example.com/${domainwithtld}/" /etc/nginx/conf.d/mastodon.conf
+sed -i "s/\mstdn/${domainwithtld}/" /etc/nginx/conf.d/mastodon.conf
 
 apt install -t jessie-backports letsencrypt --allow-unauthenticated -y
 service nginx stop
