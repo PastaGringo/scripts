@@ -1,10 +1,12 @@
-#!/bin/bash
+!/bin/bash
 echo
 echo "Hello, welcome the Mastodon auto-intaller !"
-echo "Could please give me your domain name? (ONLY in this format >> "domain.tld") : "
-read domain
-echo "One last thing... could you give your email account ? (for letsencrypt certificate) : "
-read email 
+echo "Could please give me your domain name? ONLY in this format >> domain.tld <<"
+read domainwithtld
+domain=$(echo $domainwithtld | cut -d'.' -f 1) 
+echo
+echo "One last thing... could you give your email accout ? (for letsencrypt certificate) : "
+read email  
 echo 
 echo GO
 echo
