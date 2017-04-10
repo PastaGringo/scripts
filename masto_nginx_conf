@@ -1,4 +1,13 @@
-cat >> /etc/nginx/conf.d/mastodon.conf <<EOF
+#!/bin/bash
+echo
+echo "Hello, welcome the Mastodon auto-intaller !"
+echo "Could please give me your domain name? ONLY in this format >> domain.tld <<"
+read domainwithtld
+domain=$(echo $domainwithtld | cut -d'.' -f 1) 
+echo
+echo "One last thing... could you give your email accout ? (for letsencrypt certificate) : "
+read email 
+cat >> /etc/nginx/conf.d/mastodon.conf << EOF
 map $http_upgrade $connection_upgrade {
  default upgrade;
  '' close;
