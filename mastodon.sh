@@ -26,7 +26,7 @@ apt install autoconf bison build-essential libssl-dev libyaml-dev libreadline6-d
 su - mastodon << EOF
 git clone https://github.com/rbenv/rbenv.git /home/mastodon/.rbenv
 cd /home/mastodon/.rbenv && src/configure && make -C src
-echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> /home/mastodon/.bash_profile
+echo 'export PATH="/home/mastodon/.rbenv/bin:$PATH"' >> /home/mastodon/.bash_profile
 echo ''eval "$(rbenv init -)"'' >> /home/mastodon/.bash_profile
 source /home/mastodon/.bash_profile
 git clone https://github.com/rbenv/ruby-build.git /home/mastodon/.rbenv/plugins/ruby-build
