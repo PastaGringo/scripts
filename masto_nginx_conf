@@ -84,6 +84,7 @@ server {
  error_page 500 501 502 503 504 /500.html;
 }
 EOT
-sed -i '/example.com/c\$domainwithtld' /etc/nginx/conf.d/mastodon.conf
-sed -i "s/\mstdn.io/${domainwithtld}/" mastodon.conf
-sed -i "s/\example.com/${domainwithtld}/" mastodon.conf
+sed -i "/example.com/c\$domainwithtld" /etc/nginx/conf.d/mastodon.conf
+sed -i "s/\mstdn.io/${domainwithtld}/" /etc/nginx/conf.d/mastodon.conf
+sed -i "s/\example.com/${domainwithtld}/" /etc/nginx/conf.d/mastodon.conf
+sed -i "s/\mstdn/${domainwithtld}/" /etc/nginx/conf.d/mastodon.conf
