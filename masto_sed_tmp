@@ -1,0 +1,90 @@
+#!/bin/bash
+echo
+echo "Hello, welcome the Mastodon auto-intaller !"
+echo "Could please give me your domain name? ONLY in this format >> domain.tld <<"
+read domainwithtld
+domain=$(echo $domainwithtld | cut -d'.' -f 1) 
+echo
+echo "One last thing... could you give your email accout ? (for letsencrypt certificate) : "
+read email 
+cat >> /tmp/mastodon.conf << 'EOT' #TO CHANGE
+map $http_upgrade $connection_upgrade {
+ default upgrade;
+ '' close;
+}
+server {
+ listen 80;
+ listen [::]:80;
+ server_name www.mstdn.io mstdn.io;
+ return 301 https://mstdn.io$request_uri;
+
+ access_log /dev/null;
+ error_log /dev/null;
+}
+
+server {
+ listen 443 ssl http2;
+ listen [::]:443 ssl http2;
+ server_name www.mstdn.io mstdn.io;
+
+ if ($host = www.mstdn.io) {
+  return 301 https://mstdn.io$request_uri;
+ }
+
+ access_log /var/log/nginx/mstdn-access.log;
+ error_log /var/log/nginx/mstdn-error.log;
+
+ ssl_certificate /etc/letsencrypt/live/www.mstdn.io/fullchain.pem;
+ ssl_certificate_key /etc/letsencrypt/live/www.mstdn.io/privkey.pem;
+ ssl_protocols TLSv1.2;
+ ssl_ciphers EECDH+AESGCM:EECDH+CHACHA20:EECDH+AES;
+ ssl_prefer_server_ciphers on;
+ add_header Strict-Transport-Security "max-age=15552000; preload";
+
+ keepalive_timeout 70;
+ sendfile on;
+ client_max_body_size 0;
+ gzip off;
+
+ root /home/mastodon/live/public;
+
+ location / {
+  try_files $uri @proxy;
+ }
+
+ location @proxy {
+  proxy_set_header Host $host;
+  proxy_set_header X-Real-IP $remote_addr;
+  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  proxy_set_header X-Forwarded-Proto https;
+  proxy_pass_header Server;
+  proxy_pass http://127.0.0.1:3000;
+  proxy_buffering off;
+  proxy_redirect off;
+  proxy_http_version 1.1;
+  proxy_set_header Upgrade $http_upgrade;
+  proxy_set_header Connection $connection_upgrade;
+  tcp_nodelay on;
+ }
+
+ location /api/v1/streaming {
+  proxy_set_header Host $host;
+  proxy_set_header X-Real-IP $remote_addr;
+  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  proxy_set_header X-Forwarded-Proto https;
+  proxy_pass http://127.0.0.1:4000;
+  proxy_buffering off;
+  proxy_redirect off;
+  proxy_http_version 1.1;
+  proxy_set_header Upgrade $http_upgrade;
+  proxy_set_header Connection $connection_upgrade;
+  tcp_nodelay on;
+ }
+
+ error_page 500 501 502 503 504 /500.html;
+}
+EOT
+sed -i "/example.com/c\$domainwithtld" /tmp/mastodon.conf
+sed -i "s/\mstdn.io/${domainwithtld}/" /tmp/mastodon.conf
+sed -i "s/\example.com/${domainwithtld}/" /tmp/mastodon.conf
+sed -i "s/\mstdn/${domainwithtld}/" /tmp/mastodon.conf
