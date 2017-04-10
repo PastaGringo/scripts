@@ -6,7 +6,7 @@ read fqdn
 www=$(echo $fqdn | cut -d'.' -f 1) 
 domain=$(echo $fqdn | cut -d'.' -f 2) 
 tld=$(echo $fqdn | cut -d'.' -f 3) 
-echo "One last thing... could you give your email accout ? (for letsencrypt certificate) : "
+echo "One last thing... could you give your email account ? (for letsencrypt certificate) : "
 read email 
 echo 
 echo GO
