@@ -1,9 +1,15 @@
 #!/bin/bash
+echo
+echo "Hello, welcome the Mastodon auto-intaller !"
+echo "Could please give me your domain name? (ONLY in this format >> www.domain.tld) : "
+read fqdn
+www=$(echo $fqdn | cut -d'.' -f 1) 
+domain=$(echo $fqdn | cut -d'.' -f 2) 
+tld=$(echo $fqdn | cut -d'.' -f 3) 
+echo "One last thing... could you give your email accout ? (for letsencrypt certificate) : "
+read email 
 echo 
-echo mastodon.sh
-echo remove all sudo
-echo 
-echo go
+echo GO
 echo
 echo "deb http://httpredir.debian.org/debian jessie-backports main" >> /etc/apt/sources.list
 apt update && apt full-upgrade -y
