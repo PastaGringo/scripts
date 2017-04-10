@@ -116,9 +116,9 @@ EOF
 
 systemctl enable /etc/systemd/system/mastodon-*.service
 
-sudo systemctl start mastodon-web.service mastodon-sidekiq.service mastodon-streaming.service
-sudo systemctl restart mastodon-web.service mastodon-sidekiq.service mastodon-streaming.service
-sudo systemctl status mastodon-web.service mastodon-sidekiq.service mastodon-streaming.service
+systemctl start mastodon-web.service mastodon-sidekiq.service mastodon-streaming.service
+systemctl restart mastodon-web.service mastodon-sidekiq.service mastodon-streaming.service
+systemctl status mastodon-web.service mastodon-sidekiq.service mastodon-streaming.service
 
 echo
 echo Installation du reverse proxy Nginx
