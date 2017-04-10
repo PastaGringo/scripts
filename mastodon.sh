@@ -1,4 +1,5 @@
 #!/bin/bash
+cd /tmp
 echo
 echo "Hello, welcome the Mastodon auto-intaller !"
 echo "Could please give me your domain name? ONLY in this format >> domain.tld <<"
