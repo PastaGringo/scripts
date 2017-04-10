@@ -84,7 +84,7 @@ server {
  error_page 500 501 502 503 504 /500.html;
 }
 EOT
-sed -i "/example.com/c\$domainwithtld" /tmp/mastodon.conf
+sed -i "s/\www.mstdn.io/${domainwithtld}/" /tmp/mastodon.conf
 sed -i "s/\mstdn.io/${domainwithtld}/" /tmp/mastodon.conf
 sed -i "s/\example.com/${domainwithtld}/" /tmp/mastodon.conf
 sed -i "s/\mstdn/${domainwithtld}/" /tmp/mastodon.conf
