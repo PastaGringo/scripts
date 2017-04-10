@@ -53,9 +53,9 @@ sed -i '/DB_HOST/c\DB_HOST=/var/run/postgresql' .env.production
 sed -i '/DB_USER/c\DB_USER=mastodon' .env.production
 sed -i '/DB_NAME/c\DB_NAME=mastodon_production' .env.production
 sed -i '/LOCAL_DOMAIN/c\LOCAL_DOMAIN=domainedevotreinstance.tld' .env.production
-sed -i '/PAPERCLIP_SECRET/c\PAPERCLIP_SECRET=secret1' .env.production
-sed -i '/SECRET_KEY_BASE/c\SECRET_KEY_BASE=secret2' .env.production
-sed -i '/OTP_SECRET/c\OTP_SECRET=secret3' .env.production
+sed -i '/PAPERCLIP_SECRET/c\PAPERCLIP_SECRET=$secret1' .env.production
+sed -i '/SECRET_KEY_BASE/c\SECRET_KEY_BASE=$secret2' .env.production
+sed -i '/OTP_SECRET/c\OTP_SECRET=$secret3' .env.production
 echo
 echo Mise en place de la base de données  
 echo
