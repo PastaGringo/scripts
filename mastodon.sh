@@ -48,6 +48,13 @@ cp .env.production.sample .env.production
 secret1=$(bundle exec rake secret)
 secret2=$(bundle exec rake secret)
 secret3=$(bundle exec rake secret)
+echo $secret1
+echo $secret2
+echo $secret3
+echo
+echo TEST BUNDLE
+echo
+bundle
 sed -i '/REDIS_HOST/c\REDIS_HOST=localhost' .env.production
 sed -i '/DB_HOST/c\DB_HOST=/var/run/postgresql' .env.production
 sed -i '/DB_USER/c\DB_USER=mastodon' .env.production
@@ -65,7 +72,6 @@ echo Pré-compilation des fichiers CSS et JS
 echo
 RAILS_ENV=production bundle exec rails assets:precompile
 EOF
-exit
 
 cat >> /etc/systemd/system/mastodon-web.service <<EOF
 [Unit]
