@@ -1,0 +1,56 @@
+cat >> /etc/systemd/system/mastodon-web.service <<EOF
+[Unit]
+ Description=mastodon-web
+ After=network.target
+[Service]
+ Type=simple
+ User=mastodon
+ WorkingDirectory=/home/mastodon/live
+ Environment="RAILS_ENV=production"
+ Environment="PORT=3000"
+ ExecStart=/home/mastodon/.rbenv/shims/bundle exec puma -C config/puma.rb
+ TimeoutSec=15
+ Restart=always
+[Install]
+ WantedBy=multi-user.target
+EOF
+
+cat >> /etc/systemd/system/mastodon-sidekiq.service <<EOF
+[Unit]
+ Description=mastodon-sidekiq
+ After=network.target
+[Service]
+ Type=simple
+ User=mastodon
+ WorkingDirectory=/home/mastodon/live
+ Environment="RAILS_ENV=production"
+ Environment="DB_POOL=5"
+ ExecStart=/home/mastodon/.rbenv/shims/bundle exec sidekiq -c 5 -q default -q mailers -q pull -q push
+ TimeoutSec=15
+ Restart=always
+[Install]
+ WantedBy=multi-user.target
+EOF
+
+cat >> /etc/systemd/system/mastodon-streaming.service <<EOF
+[Unit]
+ Description=mastodon-streaming
+ After=network.target
+[Service]
+ Type=simple
+ User=mastodon
+ WorkingDirectory=/home/mastodon/live
+ Environment="NODE_ENV=production"
+ Environment="PORT=4000"
+ ExecStart=/usr/bin/npm run start
+ TimeoutSec=15
+ Restart=always
+[Install]
+ WantedBy=multi-user.target
+EOF
+
+systemctl enable /etc/systemd/system/mastodon-*.service
+
+systemctl start mastodon-web.service mastodon-sidekiq.service mastodon-streaming.service
+systemctl restart mastodon-web.service mastodon-sidekiq.service mastodon-streaming.service
+systemctl status mastodon-web.service mastodon-sidekiq.service mastodon-streaming.service
