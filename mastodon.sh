@@ -23,7 +23,7 @@ su - postgres -c "psql -c 'CREATE USER mastodon CREATEDB;'"
 adduser --disabled-password --disabled-login --gecos "" mastodon
 echo "mastodon ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers
 apt install autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm3 libgdbm-dev rubygems build-essential -y
-sudo -u mastodon bash << EOF
+su - mastodon << EOF
 git clone https://github.com/rbenv/rbenv.git /home/mastodon/.rbenv
 cd /home/mastodon/.rbenv && src/configure && make -C src
 whoami
