@@ -85,3 +85,5 @@ server {
 }
 EOT
 sed -i '/example.com/c\$domainwithtld' /etc/nginx/conf.d/mastodon.conf
+sed -i -e "s/\mstdn.io/${domainwithtld}/" mastodon.conf
+sed -i -e "s/\example.com/${domainwithtld}/" mastodon.conf
