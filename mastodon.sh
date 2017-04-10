@@ -215,5 +215,5 @@ EOF
 
 apt install -t jessie-backports letsencrypt --allow-unauthenticated -y
 service nginx stop
-letsencrypt certonly -d www.domaine.tld -d domaine.tld --agree-tos -m pstr@protonmail.com --rsa-key-size 4096 --standalone
+letsencrypt certonly -d www.$domainwithtld -d $domainwithtld --agree-tos -m $email --rsa-key-size 4096 --standalone
 service nginx start
