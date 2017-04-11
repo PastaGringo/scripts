@@ -10,7 +10,7 @@ echo "One last thing... could you give your email accout ? (for letsencrypt cert
 read email  
 echo 
 echo GO
-rubyversion=$(curl https://raw.githubusercontent.com/tootsuite/mastodon/master/.ruby-version)    
+rubyversion=$(curl -s https://raw.githubusercontent.com/tootsuite/mastodon/master/.ruby-version)    
 echo "Mastodon Ruby version is : " $rubyversion
 echo
 echo "deb http://httpredir.debian.org/debian jessie-backports main" >> /etc/apt/sources.list
