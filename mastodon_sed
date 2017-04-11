@@ -37,8 +37,8 @@ EOF
 echo 'eval "$(rbenv init -)"' >> /home/mastodon/.bash_profile
 su - mastodon << EOF
 git clone https://github.com/rbenv/ruby-build.git /home/mastodon/.rbenv/plugins/ruby-build
-rbenv install --verbose 2.3.1
-rbenv global 2.3.1
+rbenv install --verbose 2.4.1
+rbenv global 2.4.1
 gem install bundler
 cd /home/mastodon
 git clone https://github.com/tootsuite/mastodon.git live
