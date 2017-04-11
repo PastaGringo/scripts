@@ -47,12 +47,22 @@ git clone https://github.com/tootsuite/mastodon.git live
 cd live
 bundle install --deployment --without development test
 yarn install
+echo
+echo
+echo "SEDDDDDDDDDDDDDDDDDDDDDDDDDDDDD"
+echo
+echo
 cp .env.production.sample .env.production
 sed -i '/REDIS_HOST/c\REDIS_HOST=localhost' .env.production
 sed -i '/DB_HOST/c\DB_HOST=/var/run/postgresql' .env.production
 sed -i '/DB_USER/c\DB_USER=mastodon' .env.production
 sed -i '/DB_NAME/c\DB_NAME=mastodon_production' .env.production
 sed -i '/LOCAL_DOMAIN/c\LOCAL_DOMAIN=${domainwithtld}' .env.production
+echo
+echo
+echo "SEDDDDDDDDDDDDDDDDDDDDDDDDDDDDD SECRET"
+echo
+echo
 sed -i '/PAPERCLIP_SECRET/c\PAPERCLIP_SECRET='$(bundle exec rake secret)'' .env.production
 sed -i '/SECRET_KEY_BASE/c\SECRET_KEY_BASE='$(bundle exec rake secret)'' .env.production
 sed -i '/OTP_SECRET/c\OTP_SECRET='$(bundle exec rake secret)'' .env.production
