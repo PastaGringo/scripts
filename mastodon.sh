@@ -10,6 +10,8 @@ echo "One last thing... could you give your email accout ? (for letsencrypt cert
 read email  
 echo 
 echo GO
+rubyversion=$(curl -s https://raw.githubusercontent.com/tootsuite/mastodon/master/.ruby-version)    
+echo "Mastodon Ruby version is : " $rubyversion
 echo
 echo "deb http://httpredir.debian.org/debian jessie-backports main" >> /etc/apt/sources.list
 apt update && apt full-upgrade -y
@@ -37,8 +39,8 @@ EOF
 echo 'eval "$(rbenv init -)"' >> /home/mastodon/.bash_profile
 su - mastodon << EOF
 git clone https://github.com/rbenv/ruby-build.git /home/mastodon/.rbenv/plugins/ruby-build
-rbenv install --verbose 2.3.1
-rbenv global 2.3.1
+rbenv install --verbose $rubyversion
+rbenv global $rubyversion
 gem install bundler
 cd /home/mastodon
 git clone https://github.com/tootsuite/mastodon.git live
@@ -50,10 +52,10 @@ sed -i '/REDIS_HOST/c\REDIS_HOST=localhost' .env.production
 sed -i '/DB_HOST/c\DB_HOST=/var/run/postgresql' .env.production
 sed -i '/DB_USER/c\DB_USER=mastodon' .env.production
 sed -i '/DB_NAME/c\DB_NAME=mastodon_production' .env.production
-sed -i '/LOCAL_DOMAIN/c\LOCAL_DOMAIN=domainedevotreinstance.tld' .env.production
-sed -i '/PAPERCLIP_SECRET/c\PAPERCLIP_SECRET='$(bundle exec rake secret)'' .env.production
-sed -i '/SECRET_KEY_BASE/c\SECRET_KEY_BASE='$(bundle exec rake secret)'' .env.production
-sed -i '/OTP_SECRET/c\OTP_SECRET='$(bundle exec rake secret)'' .env.production
+sed -i '/LOCAL_DOMAIN/c\LOCAL_DOMAIN=${domainwithtld}' .env.production
+sed -i 's/\PAPERCLIP_SECRET/PAPERCLIP_SECRET=$(bundle exec rake secret)' .env.production
+sed -i 's/\SECRET_KEY_BASE/SECRET_KEY_BASE=$(bundle exec rake secret)' .env.production
+sed -i 's/\OTP_SECRET/OTP_SECRET=$(bundle exec rake secret)' .env.production
 echo
 echo Mise en place de la base de données  
 echo
@@ -212,7 +214,6 @@ server {
  error_page 500 501 502 503 504 /500.html;
 }
 EOT
-sed -i "/example.com/c\$domainwithtld" /etc/nginx/conf.d/mastodon.conf
 sed -i "s/\mstdn.io/${domainwithtld}/" /etc/nginx/conf.d/mastodon.conf
 sed -i "s/\example.com/${domainwithtld}/" /etc/nginx/conf.d/mastodon.conf
 sed -i "s/\mstdn/${domainwithtld}/" /etc/nginx/conf.d/mastodon.conf
@@ -221,3 +222,6 @@ apt install -t jessie-backports letsencrypt --allow-unauthenticated -y
 service nginx stop
 letsencrypt certonly -d www.$domainwithtld -d $domainwithtld --agree-tos -m $email --rsa-key-size 4096 --standalone
 service nginx start
+echo
+echo "Merci de vérifier le fichier .env.production ainsi que le fichier /etc/nginx/conf.d/mastodon.conf !
+echo
