@@ -51,7 +51,10 @@ echo
 echo
 echo "SEDDDDDDDDDDDDDDDDDDDDDDDDDDDDD"
 echo
-echo
+echo 
+secret1=$(bundle exec rake secret)
+secret2=$(bundle exec rake secret)
+secret3=$(bundle exec rake secret)
 cp .env.production.sample .env.production
 sed -i '/REDIS_HOST/c\REDIS_HOST=localhost' .env.production
 sed -i '/DB_HOST/c\DB_HOST=/var/run/postgresql' .env.production
@@ -63,6 +66,6 @@ echo
 echo "SEDDDDDDDDDDDDDDDDDDDDDDDDDDDDD SECRET"
 echo
 echo
-sed -i '/PAPERCLIP_SECRET/c\PAPERCLIP_SECRET='$(bundle exec rake secret)'' .env.production
-sed -i '/SECRET_KEY_BASE/c\SECRET_KEY_BASE='$(bundle exec rake secret)'' .env.production
-sed -i '/OTP_SECRET/c\OTP_SECRET='$(bundle exec rake secret)'' .env.production
+sed -i '/PAPERCLIP_SECRET/c\PAPERCLIP_SECRET=${secret1}' .env.production
+sed -i '/SECRET_KEY_BASE/c\SECRET_KEY_BASE=${secret2}' .env.production
+sed -i '/OTP_SECRET/c\OTP_SECRET=${secret3}' .env.production
