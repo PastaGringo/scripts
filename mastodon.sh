@@ -214,9 +214,9 @@ server {
  error_page 500 501 502 503 504 /500.html;
 }
 EOT
-sed -i "s/\mstdn.io/${domainwithtld}/" /etc/nginx/conf.d/mastodon.conf
-sed -i "s/\example.com/${domainwithtld}/" /etc/nginx/conf.d/mastodon.conf
-sed -i "s/\mstdn/${domainwithtld}/" /etc/nginx/conf.d/mastodon.conf
+sed -i "s/\mstdn.io/${domainwithtld}" /etc/nginx/conf.d/mastodon.conf
+sed -i "s/\example.com/${domainwithtld}" /etc/nginx/conf.d/mastodon.conf
+sed -i "s/\mstdn/${domainwithtld}" /etc/nginx/conf.d/mastodon.conf
 
 apt install -t jessie-backports letsencrypt --allow-unauthenticated -y
 service nginx stop
