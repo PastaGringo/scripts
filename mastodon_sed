@@ -31,13 +31,13 @@ su - postgres -c "psql -c 'CREATE USER mastodon CREATEDB;'"
 adduser --disabled-password --disabled-login --gecos "" mastodon
 echo "mastodon ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers
 apt install autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm3 libgdbm-dev -y
-su - mastodon << 'EOF'
+su - mastodon << EOF
 git clone https://github.com/rbenv/rbenv.git /home/mastodon/.rbenv
 cd /home/mastodon/.rbenv && src/configure && make -C src
 echo 'export PATH="/home/mastodon/.rbenv/bin:$PATH"' >> /home/mastodon/.bash_profile
 EOF
 echo 'eval "$(rbenv init -)"' >> /home/mastodon/.bash_profile
-su - mastodon << 'EOF'
+su - mastodon << EOF
 git clone https://github.com/rbenv/ruby-build.git /home/mastodon/.rbenv/plugins/ruby-build
 rbenv install --verbose $rubyversion
 rbenv global $rubyversion
@@ -52,27 +52,12 @@ echo
 echo "SEDDDDDDDDDDDDDDDDDDDDDDDDDDDDD"
 echo
 echo 
-secret1=$(bundle exec rake secret)
-secret2=$(bundle exec rake secret)
-secret3=$(bundle exec rake secret)
 cp .env.production.sample .env.production
 sed -i '/REDIS_HOST/c\REDIS_HOST=localhost' .env.production
 sed -i '/DB_HOST/c\DB_HOST=/var/run/postgresql' .env.production
 sed -i '/DB_USER/c\DB_USER=mastodon' .env.production
 sed -i '/DB_NAME/c\DB_NAME=mastodon_production' .env.production
 sed -i '/LOCAL_DOMAIN/c\LOCAL_DOMAIN=${domainwithtld}' .env.production
-echo
-echo
-echo "SEDDDDDDDDDDDDDDDDDDDDDDDDDDDDD SECRET"
-echo
-echo
-sed -i "s/\PAPERCLIP_SECRET/PAPERCLIP_SECRET=${secret1}/" .env.production
-sed -i "s/\SECRET_KEY_BASE/SECRET_KEY_BASE=${secret2}/" .env.production
-sed -i "s/\OTP_SECRET/OTP_SECRET=${secret3}/" .env.production
-cp .env.production.sample .env.production.2
-sed -i "s/\PAPERCLIP_SECRET/PAPERCLIP_SECRET=$(bundle exec rake secret)/" .env.production.2
-sed -i "s/\SECRET_KEY_BASE/SECRET_KEY_BASE=$(bundle exec rake secret)/" .env.production.2
-sed -i "s/\OTP_SECRET/OTP_SECRET=$(bundle exec rake secret)/" .env.production.2
-#sed -i '/PAPERCLIP_SECRET/c\PAPERCLIP_SECRET=${secret1}' .env.production
-#sed -i '/SECRET_KEY_BASE/c\SECRET_KEY_BASE=${secret2}' .env.production
-#sed -i '/OTP_SECRET/c\OTP_SECRET=${secret3}' .env.production
+sed -i 's/PAPERCLIP_SECRET=/PAPERCLIP_SECRET=$(/home/mastodon/.rbenv/shims/bundle exec rake secret)/g' .env.production
+sed -i '/SECRET_KEY_BASE/c\SECRET_KEY_BASE='$(/home/mastodon/.rbenv/shims/bundle exec rake secret)'' .env.production 
+sed -i '/OTP_SECRET/c\OTP_SECRET='$(/home/mastodon/.rbenv/shims/bundle exec rake secret)'' .env.production
