@@ -2,6 +2,10 @@
 cd /tmp
 echo
 echo "Hello, welcome the Mastodon auto-intaller !"
+echo
+echo "For installing Mastodon with this script, you absolutely need to have the same IP for the A DNS record from your domain and this server."
+echo "This script will be updated in few times with security to avoid any issue"
+echo 
 echo "Could please give me your domain name? ONLY in this format >> domain.tld <<"
 read domainwithtld
 domain=$(echo $domainwithtld | cut -d'.' -f 1) 
@@ -223,14 +227,16 @@ server {
  error_page 500 501 502 503 504 /500.html;
 }
 EOT
-sed -i "s/\mstdn.io/${domainwithtld}" /etc/nginx/conf.d/mastodon.conf
-sed -i "s/\example.com/${domainwithtld}" /etc/nginx/conf.d/mastodon.conf
-sed -i "s/\mstdn/${domainwithtld}" /etc/nginx/conf.d/mastodon.conf
+sed -i "s/mstdn.io/${domainwithtld}/g" /etc/nginx/conf.d/mastodon.conf
+sed -i "s/mstdn-access/${domainwithtld}-access/g" /etc/nginx/conf.d/mastodon.conf
+sed -i "s/mstdn-error/${domainwithtld}-error/g" /etc/nginx/conf.d/mastodon.conf
 
 apt install -t jessie-backports letsencrypt --allow-unauthenticated -y
 service nginx stop
 letsencrypt certonly -d www.$domainwithtld -d $domainwithtld --agree-tos -m $email --rsa-key-size 4096 --standalone
 service nginx start
 echo
-echo "Merci de vérifier le fichier .env.production ainsi que le fichier /etc/nginx/conf.d/mastodon.conf !
+echo INSTALLATION FINISHED
+echo YOU NEED TO BROWSE YOUR SERVER TO ADD YOUR ACCOUNT
+echo After, we will activate your account as administator.
 echo
