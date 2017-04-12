@@ -61,3 +61,4 @@ sed -i '/LOCAL_DOMAIN/c\LOCAL_DOMAIN=${domainwithtld}' .env.production
 sed -i 's/PAPERCLIP_SECRET=/PAPERCLIP_SECRET=$(/home/mastodon/.rbenv/shims/bundle exec rake secret)/g' .env.production
 sed -i '/SECRET_KEY_BASE/c\SECRET_KEY_BASE='$(/home/mastodon/.rbenv/shims/bundle exec rake secret)'' .env.production 
 sed -i '/OTP_SECRET/c\OTP_SECRET='$(/home/mastodon/.rbenv/shims/bundle exec rake secret)'' .env.production
+EOF
