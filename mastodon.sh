@@ -48,14 +48,23 @@ cd live
 bundle install --deployment --without development test
 yarn install
 cp .env.production.sample .env.production
-sed -i '/REDIS_HOST/c\REDIS_HOST=localhost' .env.production
-sed -i '/DB_HOST/c\DB_HOST=/var/run/postgresql' .env.production
-sed -i '/DB_USER/c\DB_USER=mastodon' .env.production
-sed -i '/DB_NAME/c\DB_NAME=mastodon_production' .env.production
-sed -i '/LOCAL_DOMAIN/c\LOCAL_DOMAIN=${domainwithtld}' .env.production
-sed -i 's/\PAPERCLIP_SECRET/PAPERCLIP_SECRET=$(bundle exec rake secret)' .env.production
-sed -i 's/\SECRET_KEY_BASE/SECRET_KEY_BASE=$(bundle exec rake secret)' .env.production
-sed -i 's/\OTP_SECRET/OTP_SECRET=$(bundle exec rake secret)' .env.production
+EOF
+cd /home/mastodon/live
+secret1=$(/home/mastodon/.rbenv/shims/bundle exec rake secret)
+secret2=$(/home/mastodon/.rbenv/shims/bundle exec rake secret)
+secret3=$(/home/mastodon/.rbenv/shims/bundle exec rake secret)
+export secret1 secret2 secret3 domainwithtld
+su - mastodon << EOF
+cd /home/mastodon/live
+if test -f .env.production; then rm .env.production && cp .env.production.sample .env.production; else cp .env.production.sample .env.production; fi
+sed -i '/REDIS_HOST=/c\REDIS_HOST=localhost' .env.production                                                                                                                                                      
+sed -i '/DB_HOST=/c\DB_HOST=/var/run/postgresql' .env.production
+sed -i '/DB_USER=/c\DB_USER=mastodon' .env.production
+sed -i '/DB_NAME=/c\DB_NAME=mastodon_production' .env.production
+sed -i '/LOCAL_DOMAIN=/c\LOCAL_DOMAIN=${domainwithtld}' .env.production
+sed -i '/PAPERCLIP_SECRET=/c\PAPERCLIP_SECRET=${secret1}' .env.production
+sed -i '/SECRET_KEY_BASE=/c\SECRET_KEY_BASE=${secret2}' .env.production
+sed -i '/OTP_SECRET=/c\OTP_SECRET=${secret3}' .env.production            
 echo
 echo Mise en place de la base de données  
 echo
