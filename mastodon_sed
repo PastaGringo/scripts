@@ -31,13 +31,13 @@ su - postgres -c "psql -c 'CREATE USER mastodon CREATEDB;'"
 adduser --disabled-password --disabled-login --gecos "" mastodon
 echo "mastodon ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers
 apt install autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm3 libgdbm-dev -y
-su - mastodon << EOF
+su - mastodon << 'EOF'
 git clone https://github.com/rbenv/rbenv.git /home/mastodon/.rbenv
 cd /home/mastodon/.rbenv && src/configure && make -C src
 echo 'export PATH="/home/mastodon/.rbenv/bin:$PATH"' >> /home/mastodon/.bash_profile
 EOF
 echo 'eval "$(rbenv init -)"' >> /home/mastodon/.bash_profile
-su - mastodon << EOF
+su - mastodon << 'EOF'
 git clone https://github.com/rbenv/ruby-build.git /home/mastodon/.rbenv/plugins/ruby-build
 rbenv install --verbose $rubyversion
 rbenv global $rubyversion
