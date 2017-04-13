@@ -1,0 +1,31 @@
+#!/bin/bash
+cd /tmp
+echo
+echo "Hello, welcome the Mastodon auto-intaller !"
+echo
+echo "For installing Mastodon with this script, you absolutely need to have the same IP for the A DNS record from your domain and this server."
+echo "This script will be updated in few times with security to avoid any issue"
+echo 
+echo "Could please give me your domain name? ONLY in this format >> domain.tld <<"
+read domainwithtld
+domain=$(echo $domainwithtld | cut -d'.' -f 1) 
+echo
+echo "One last thing... could you give your email accout ? (for letsencrypt certificate) : "
+read email  
+echo
+echo Installation du reverse proxy Nginx
+echo
+wget -O - https://nginx.org/keys/nginx_signing.key | apt-key add -
+echo "deb http://nginx.org/packages/debian/ $(lsb_release -sc) nginx" > /etc/apt/sources.list.d/nginx.list
+apt update
+apt install nginx -y
+echo 
+apt install -t jessie-backports letsencrypt --allow-unauthenticated -y
+service nginx stop
+letsencrypt certonly -d {www.$domainwithtld} -d $domainwithtld --agree-tos -m $email --rsa-key-size 4096 --standalone
+service nginx start
+echo
+echo INSTALLATION FINISHED
+echo YOU NEED TO BROWSE YOUR SERVER TO ADD YOUR ACCOUNT
+echo After, we will activate your account as administator.
+echo
