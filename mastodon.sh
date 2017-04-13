@@ -10,10 +10,36 @@ echo "Could please give me your domain name? ONLY in this format >> domain.tld <
 read domainwithtld
 domain=$(echo $domainwithtld | cut -d'.' -f 1) 
 echo
-echo "One last thing... could you give your email accout ? (for letsencrypt certificate) : "
+echo "Could you give your email accout ? (for letsencrypt certificate) : "
 read email  
-echo 
-echo GO
+apt-get -qq install dnsutils -f
+echo
+echo "Looking for the DNS A record on $domainwithtld..."
+Target_domain_DNS_record_A=$(dig $domainwithtld +short)
+echo $Target_domain_DNS_record_A
+echo "Looking for the server's external IP address..."
+external_ip=$(dig +short myip.opendns.com @resolver1.opendns.com)
+echo $external_ip
+echo
+if [ "$Target_domain_DNS_record_A" == "$external_ip" ]; then
+        echo "It's all good ! IP address are the same, script will work without issue."
+else
+        echo "! WARNING ! Your A DNS record for $domainwithtld is different than the local external address IP. The script will not work at the end ! (LetsEncrypt certificate$
+fi
+echo
+read -r -p "Are you sure to install Mastodon's instance? [y/n] " response
+case "$response" in
+        [y])
+                echo
+                echo GO
+                echo
+                ;;
+        *)
+                echo Wrong answser, exiting....
+                echo
+                exit
+                ;;
+esac
 rubyversion=$(curl -s https://raw.githubusercontent.com/tootsuite/mastodon/master/.ruby-version)    
 echo "Mastodon Ruby version is : " $rubyversion
 echo
