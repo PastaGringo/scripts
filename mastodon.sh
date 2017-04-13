@@ -12,7 +12,10 @@ domain=$(echo $domainwithtld | cut -d'.' -f 1)
 echo
 echo "Could you give your email accout ? (for letsencrypt certificate) : "
 read email  
-apt-get -qq update && apt-get -qq install dnsutils -f
+echo "Updating repos..."
+apt-get -qq update 
+echo "Installing dnsutils..."
+apt-get -qq install dnsutils -f
 echo
 echo "Looking for the DNS A record on $domainwithtld..."
 Target_domain_DNS_record_A=$(dig $domainwithtld +short)
