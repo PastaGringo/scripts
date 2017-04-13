@@ -233,9 +233,7 @@ sed -i "s/mstdn-error/${domainwithtld}-error/g" /etc/nginx/conf.d/mastodon.conf
 
 apt install -t jessie-backports letsencrypt --allow-unauthenticated -y
 service nginx stop
-echo "letsencrypt certonly -d {www.$domainwithtld} -d $domainwithtld --agree-tos -m $email --rsa-key-size 4096 --standalone"
-echo "letsencrypt certonly -d www.$domainwithtld -d $domainwithtld --agree-tos -m $email --rsa-key-size 4096 --standalone"
-letsencrypt certonly -d {www.$domainwithtld} -d $domainwithtld --agree-tos -m $email --rsa-key-size 4096 --standalone
+letsencrypt certonly -d www.$domainwithtld -d $domainwithtld --agree-tos -m $email --rsa-key-size 4096 --standalone
 service nginx start
 echo
 echo INSTALLATION FINISHED
