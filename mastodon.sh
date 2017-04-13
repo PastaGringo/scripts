@@ -13,6 +13,7 @@ echo
 echo "Could you give your email accout ? (for letsencrypt certificate) : "
 read email  
 echo "Updating repos..."
+apt-get -qq clean
 apt-get -qq update 
 echo "Installing dnsutils..."
 apt-get -qq install dnsutils -f
