@@ -24,7 +24,7 @@ echo
 if [ "$Target_domain_DNS_record_A" == "$external_ip" ]; then
         echo "It's all good ! IP address are the same, script will work without issue."
 else
-        echo "! WARNING ! Your A DNS record for $domainwithtld is different than the local external address IP. The script will not work at the end ! (LetsEncrypt certificate$
+        echo "! WARNING ! Your A DNS record for $domainwithtld is different than the local external address IP. The script will not work at the end ! (LetsEncrypt certificate)"
 fi
 echo
 read -r -p "Are you sure to install Mastodon's instance? [y/n] " response
