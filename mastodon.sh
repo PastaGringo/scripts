@@ -11,7 +11,8 @@ read domainwithtld
 domain=$(echo $domainwithtld | cut -d'.' -f 1) 
 echo
 echo "Could you give your email accout ? (for letsencrypt certificate) : "
-read email  
+read email
+echo
 echo "Updating repos..."
 apt-get -qq clean
 apt-get -qq update 
