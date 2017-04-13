@@ -17,7 +17,7 @@ echo "Updating repos..."
 apt-get -qq clean
 apt-get -qq update 
 echo "Installing dnsutils..."
-apt-get -qq install dnsutils -f
+apt-get -qq install dnsutils -y
 echo
 echo "Looking for the DNS A record on $domainwithtld..."
 Target_domain_DNS_record_A=$(dig $domainwithtld +short)
