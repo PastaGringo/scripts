@@ -62,6 +62,6 @@ case "$response" in
                 echo "No problem!"
                 exit
                 ;;
-echo                                                         
+esac
                                                           
                                                           
