@@ -50,8 +50,18 @@ echo
 echo "To finish, could you give your email accout ? (for letsencrypt certificate) : "
 read email
 echo
+echo "I got everything I need !"
 echo "The installation process time depends on your server..."
-echo "Are you ready to begin ?"
+read -r -p "Are you ready to begin ? [y/n]" response
+case "$response" in
+        [y])
+                echo
+                echo "Let's go !"
+                ;;
+        *)
+                echo "No problem!"
+                exit
+                ;;
 echo                                                         
                                                           
                                                           
