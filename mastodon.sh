@@ -1,17 +1,57 @@
 #!/bin/bash
 cd /tmp
+echo " __  __           _            _                   _"
+echo "|  \/  | __ _ ___| |_ ___   __| | ___  _ __    ___| |___"
+echo "| |\/| |/ _  / __| __/ _ \ / _  |/ _ \|  _ \  / __|  _  |"
+echo "| |  | | (_| \__ \ || (_) | (_| | (_) | | | |_\__ \ | | |"
+echo "|_|  |_|\____|___/\__\___/ \____|\___/|_| |_(_)___/_| |_|"
+echo ""
+echo "Welcome to Mastodon.sh !"
+echo "> This script permits to install your own Mastodon's instance without doing anything !"
+echo "> This script has been created by PastaGringo with the indirect help of Angristan"
 echo
-echo "Hello, welcome the Mastodon auto-intaller !"
+echo "This script works on Debian 8 (Jessie) and is still in development"
+echo "!!! You need to start this script on a new fresh VPS, to avoid any issue on your production environment !!!"
 echo
-echo "For installing Mastodon with this script, you absolutely need to have the same IP for the A DNS record from your domain and this server."
-echo "This script will be updated in few times with security to avoid any issue"
-echo 
+echo "There are few things that you need to know before continuing if you want your own fonctionnal Mastodon instance :"
+echo "1) You need to have a valid domain name with an A DNS record with the local server IP address"
+echo "2) You need to have an account with a SMTP tiers like Mailgun/SparkPost or you own SMTP relay"
+echo "3) Few dozen of minutes regarding of your server performances"
+echo
+echo "> If all above things are in your possession, we can continue and install your first Mastodon instance !"
+echo "PS : if not, when the script will finish, you will need to modify few files by your own."
+echo
+read -p ">>> I understood everything... please continue ! <<<"
+echo
+echo "> For installing Mastodon with this script, you absolutely need to have the same IP for the A DNS record from your domain and this server."
 echo "Could please give me your domain name? ONLY in this format >> domain.tld <<"
 read domainwithtld
 domain=$(echo $domainwithtld | cut -d'.' -f 1) 
 echo
-echo "Could you give your email accout ? (for letsencrypt certificate) : "
+echo "> This script allow to configure a Mailgun account, in order to send mail activation for new Mastodon's users."
+echo "If you don't use Mailgun (or other services), you will need to modify the SMTP settings in the file "/home/mastodon/live/.env.production""
+echo "> this part is not fully implemented yet <"
+read -r -p "Do you want to configure your Mailgun account ? [y/n]" response
+case "$response" in
+        [y])
+                mailgunsetup="yes"
+                echo
+                echo "All right!"
+                read -r -p "Please give me your Mailgun SMTP login : " mailgunlogin
+                read -r -p "Please give me your Mailgun SMTP password : " mailgunpwd
+                read -r -p "Please give me your Mailgun SMTP mail sender (something@domain.tld) : " mailgunsender
+                echo "It's done !"
+                ;;
+        *)
+                echo "No problem!"
+                ;;
+esac                                                         
+echo
+echo "To finish, could you give your email accout ? (for letsencrypt certificate) : "
 read email
+echo
+echo "I got everything I need !"
+echo "The installation process time depends on your server..."
 echo
 echo "Updating repos..."
 apt-get -qq clean
@@ -270,4 +310,8 @@ echo
 echo INSTALLATION FINISHED
 echo YOU NEED TO BROWSE YOUR SERVER TO ADD YOUR ACCOUNT
 echo After, we will activate your account as administator.
-echo
+echo $mailgunlogin $mailgun $mailgunpwd $mailgunsender $mailgunsetup
+echo "Need to add : "
+echo "> cron"
+echo "> admin part"
+echo "> ..."
