@@ -23,7 +23,7 @@ echo "> If all above things are in your possession, we can continue and install 
 echo "PS : if not, when the script will finish, you will need to modify few files by your own."
 echo
 read -p ">>> I understood everything... please continue ! <<<"
-clear
+echo
 echo "> For installing Mastodon with this script, you absolutely need to have the same IP for the A DNS record from your domain and this server."
 echo "Could please give me your domain name? ONLY in this format >> domain.tld <<"
 read domainwithtld
@@ -35,16 +35,15 @@ read -r -p "Do you want to configure your Mailgun account ? [y/n]" response
 case "$response" in
         [y])
                 mailgunsetup="yes"
+                echo
                 echo "All right!"
                 read -r -p "Please give me your Mailgun SMTP login : " mailgunlogin
                 read -r -p "Please give me your Mailgun SMTP password : " mailgunlogin
                 read -r -p "Please give me your Mailgun SMTP mail sender (something@domain.tld) : " mailgunsender
                 echo "It's done !"
-                echo
                 ;;
         *)
                 echo "No problem!"
-                echo
                 ;;
 esac                                                         
 echo
