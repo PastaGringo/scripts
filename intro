@@ -31,6 +31,7 @@ domain=$(echo $domainwithtld | cut -d'.' -f 1)
 echo
 echo "> This script allow to configure a Mailgun account, in order to send mail activation for new Mastodon's users."
 echo "If you don't use Mailgun (or other services), you will need to modify the SMTP settings in the file "/home/mastodon/live/.env.production""
+echo "> this part is not fully implemented yet <"
 read -r -p "Do you want to configure your Mailgun account ? [y/n]" response
 case "$response" in
         [y])
