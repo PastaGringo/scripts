@@ -24,7 +24,7 @@ echo "PS : if not, when the script will finish, you will need to modify few file
 echo
 read -p ">>> I understood everything... please continue ! <<<"
 clear
-echo "For installing Mastodon with this script, you absolutely need to have the same IP for the A DNS record from your domain and this server."
+echo "> For installing Mastodon with this script, you absolutely need to have the same IP for the A DNS record from your domain and this server."
 echo "Could please give me your domain name? ONLY in this format >> domain.tld <<"
 read domainwithtld
 domain=$(echo $domainwithtld | cut -d'.' -f 1) 
