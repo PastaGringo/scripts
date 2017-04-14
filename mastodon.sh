@@ -52,7 +52,7 @@ echo "To finish, could you give your email accout ? (for letsencrypt certificate
 read email
 echo
 echo "I got everything I need !"
-echo "The installation process time depends on your server..."
+echo "I will verify one last thing before begin the install..."
 echo
 echo "Updating repos..."
 apt-get -qq clean
