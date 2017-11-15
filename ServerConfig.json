@@ -1,3 +1,5 @@
+sed -i "s/\"BasePathOverride.*/\"BasePathOverride\": \"\/jackett\",/g" /home/${username}/.config/Jackett/ServerConfig.json   
+
 {
   "Port": 9117,
   "AllowExternal": true,
