@@ -1,0 +1,15 @@
+#!/bin/bash
+interfaces=$(ls /var/lib/vnstat)
+echo
+echo "Resetting QuickBox Dashboard bandwith details..."
+service vnstat stop                                                                                                                                                            
+for interface in $interfaces
+do
+        rm -rf "/var/lib/vnstat/$interface" "/var/lib/vnstat/.$interface"
+        /usr/bin/vnstat -u -i $interface &> /dev/null
+done
+chown -R vnstat:vnstat /var/lib/vnstat
+service vnstat start                                                                                                                                                           
+echo -e "\e[32mSuccess.\e[39m"
+echo -e "\e[33mThe dashboard needs few minutes to display data again.\e[39m"
+echo
