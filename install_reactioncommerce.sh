@@ -18,7 +18,7 @@ sudo apt-get install -y --no-install-recommends build-essential bzip2 curl ca-ce
 curl https://install.meteor.com/ | sh
 meteor npm install --save bcrypt
 sudo npm install -g reaction-cli
-sudo reaction init
+reaction init
 cd reaction
 script /dev/null
 screen -S reaction
