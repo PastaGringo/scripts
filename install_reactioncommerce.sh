@@ -5,7 +5,7 @@ sudo apt-get install -y --no-install-recommends build-essential bzip2 curl ca-ce
 curl https://install.meteor.com/ | sh
 sudo npm install -g reaction-cli
 sudo chown -R $USER:$(id -gn $USER) /home/pastadmin/.config
-reaction init -b authorize-on-npm
+reaction init
 cd reaction
 meteor npm install --save bcrypt    
 script /dev/null
