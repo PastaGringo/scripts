@@ -1,11 +1,13 @@
 #!/bin/bash
-EXPORT ROOT_URL="http://localhost:80"
+#EXPORT ROOT_URL="http://localhost:80"
 echo Installation...
-sudo apt-get update
-sudo apt-get install -y --no-install-recommends build-essential bzip2 curl ca-certificates git python npm nodejs
+apt-get update
+apt-get install -y --no-install-recommends build-essential bzip2 curl ca-certificates git python npm
+curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+apt-get install -y nodejs
 curl https://install.meteor.com/ | sh
-sudo ln -s /usr/bin/nodejs /usr/bin/node
-sudo npm install -g reaction-cli
+#ln -s /usr/bin/nodejs /usr/bin/node
+npm install -g reaction-cli
 reaction init
 cd reaction
 reaction
