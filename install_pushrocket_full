@@ -1,5 +1,5 @@
 #!/bin/bash
-sudo apt-get update                                                                                                                                                                                           
+sudo apt-get update
 sudo apt-get install -y git screen
 curl -fsSL https://get.docker.com -o get-docker.sh
 sudo sh get-docker.sh
@@ -11,11 +11,11 @@ sudo mv go /usr/local
 echo 'export PATH=$PATH:/usr/local/go/bin" >> ~/.profile'
 source ~/.profile
 go version
-go get gitlab.com/ahmida/pushrocket/pushrocket                                                                                                                                                                
-go build gitlab.com/ahmida/pushrocket/pushrocket                                                                                                                                                              
+go get gitlab.com/ahmida/pushrocket/pushrocket
+go build gitlab.com/ahmida/pushrocket/pushrocket
 go install gitlab.com/ahmida/pushrocket/pushrocket
-go get gitlab.com/ahmida/pushrocket/pullrocket                                                                                                                                                                
-go build gitlab.com/ahmida/pushrocket/pullrocket                                                                                                                                                              
+go get gitlab.com/ahmida/pushrocket/pullrocket
+go build gitlab.com/ahmida/pushrocket/pullrocket
 go install gitlab.com/ahmida/pushrocket/pullrocket
 sudo docker pull eclipse-mosquitto
 sudo docker run -d -it -p 1883:1883 -p 9001:9001 eclipse-mosquitto
@@ -23,5 +23,5 @@ pushrocket config --address "tcp://localhost:1883"
 pairstring=$(pushrocket pair)
 pairstring2="'$pairstring'"
 pullrocket pair $pairstring2
-screen -dmS pullrocket                                                                                                                                                                                        
+screen -dmS pullrocket
 screen -x pullrocket pullrocket pull
